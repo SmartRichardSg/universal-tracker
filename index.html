@@ -1,66 +1,223 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Universal Tracker</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Universal Tracker</title>
 
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #eef4ff;
-      text-align: center;
-      padding: 30px 20px;
-      color: #172033;
-    }
-
-    .card {
-      background: white;
-      border-radius: 20px;
-      padding: 30px 20px;
-      max-width: 500px;
-      margin: auto;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    }
-
-    h1 {
-      color: #2563eb;
-      font-size: 30px;
-    }
-
-    button {
-      display: block;
-      width: 100%;
-      padding: 15px;
-      margin: 12px 0;
-      border: none;
-      border-radius: 12px;
-      background: #2563eb;
-      color: white;
-      font-size: 17px;
-      font-weight: bold;
-    }
-  </style>
+<style>
+body{
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+  background:#eef4ff;
+  color:#172033;
+  margin:0;
+  padding:25px 15px;
+}
+.card{
+  max-width:550px;
+  margin:auto;
+  background:white;
+  padding:25px 20px;
+  border-radius:20px;
+  box-shadow:0 4px 15px #0001;
+}
+h1{
+  color:#2563eb;
+  text-align:center;
+}
+button{
+  width:100%;
+  padding:14px;
+  margin:7px 0;
+  border:0;
+  border-radius:12px;
+  background:#2563eb;
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+}
+input{
+  width:100%;
+  padding:13px;
+  box-sizing:border-box;
+  border:1px solid #ccc;
+  border-radius:10px;
+  font-size:16px;
+}
+.task{
+  padding:15px 0;
+  border-bottom:1px solid #ddd;
+}
+.done{
+  text-decoration:line-through;
+  color:#888;
+}
+.small{
+  color:#777;
+  font-size:13px;
+}
+.actions{
+  display:flex;
+  gap:7px;
+}
+.actions button{
+  font-size:14px;
+  padding:9px;
+}
+.delete{
+  background:#dc2626;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="card">
+<div class="card">
 
-    <h1>📋 Universal Tracker</h1>
+<h1>📋 Universal Tracker</h1>
 
-    <p>Your reusable task and record tracker.</p>
+<p style="text-align:center">
+Tasks
+</p>
 
-    <button>＋ New Task</button>
+<input id="taskInput" placeholder="Enter a new task">
 
-    <button>＋ New Record</button>
+<button onclick="addTask()">＋ Add Task</button>
 
-    <button>📊 Review</button>
+<div id="taskList"></div>
 
-    <button>⚙️ Settings</button>
+</div>
 
-    <p>Version 1.0</p>
+<script>
 
-  </div>
+let tasks =
+JSON.parse(localStorage.getItem("tasks") || "[]");
+
+function save(){
+  localStorage.setItem("tasks",JSON.stringify(tasks));
+}
+
+function display(){
+
+  let list=document.getElementById("taskList");
+
+  if(tasks.length===0){
+    list.innerHTML=
+      "<p class='small' style='text-align:center'>No tasks yet.</p>";
+    return;
+  }
+
+  list.innerHTML="";
+
+  tasks.forEach(function(task,index){
+
+    let div=document.createElement("div");
+
+    div.className="task";
+
+    div.innerHTML=`
+
+      <div class="${task.done ? "done" : ""}">
+        <strong>${task.text}</strong>
+      </div>
+
+      <div class="small">
+        ${task.date}
+      </div>
+
+      <div class="actions">
+
+        <button onclick="completeTask(${index})">
+          ${task.done ? "↩️ Undo" : "✅ Done"}
+        </button>
+
+        <button onclick="editTask(${index})">
+          ✏️ Edit
+        </button>
+
+        <button class="delete"
+          onclick="deleteTask(${index})">
+          🗑️ Delete
+        </button>
+
+      </div>
+    `;
+
+    list.appendChild(div);
+
+  });
+}
+
+function addTask(){
+
+  let input=document.getElementById("taskInput");
+
+  let text=input.value.trim();
+
+  if(text===""){
+    alert("Please enter a task.");
+    return;
+  }
+
+  tasks.push({
+
+    text:text,
+
+    done:false,
+
+    date:new Date().toLocaleString()
+
+  });
+
+  input.value="";
+
+  save();
+
+  display();
+}
+
+function completeTask(index){
+
+  tasks[index].done=!tasks[index].done;
+
+  save();
+
+  display();
+}
+
+function editTask(index){
+
+  let newText=
+    prompt("Edit task:",tasks[index].text);
+
+  if(newText===null)return;
+
+  newText=newText.trim();
+
+  if(newText==="")return;
+
+  tasks[index].text=newText;
+
+  save();
+
+  display();
+}
+
+function deleteTask(index){
+
+  if(confirm("Delete this task?")){
+
+    tasks.splice(index,1);
+
+    save();
+
+    display();
+
+  }
+}
+
+display();
+
+</script>
 
 </body>
 </html>
