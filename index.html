@@ -7,7 +7,6 @@
 <title>Exercise Tracker</title>
 
 <style>
-
 :root{
     --main:#2864e8;
     --bg:#eef4ff;
@@ -56,7 +55,7 @@ h2{
 
 h3{
     margin:0 0 8px;
-    font-size:22px;
+    font-size:24px;
 }
 
 .tabs{
@@ -118,20 +117,6 @@ button{
     background:var(--danger);
 }
 
-.small{
-    padding:12px 16px;
-    border:0;
-    border-radius:14px;
-    background:var(--main);
-    color:white;
-    font-weight:700;
-    font-size:15px;
-}
-
-.gray{
-    background:#777;
-}
-
 .item{
     background:#f7f9fd;
     border-radius:20px;
@@ -147,19 +132,19 @@ button{
 
 .actions{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:repeat(2,1fr);
     gap:10px;
     margin-top:15px;
 }
 
 .actions button{
-    padding:13px 8px;
+    padding:14px 8px;
     border:0;
     border-radius:14px;
     color:white;
     background:var(--main);
     font-weight:800;
-    font-size:15px;
+    font-size:16px;
 }
 
 .actions .delete{
@@ -220,6 +205,24 @@ button{
     margin-top:20px;
 }
 
+.info{
+    background:#f4f7fc;
+    border-radius:20px;
+    padding:18px;
+    margin-bottom:20px;
+    text-align:center;
+}
+
+.info strong{
+    font-size:22px;
+}
+
+.record-value{
+    font-size:21px;
+    font-weight:800;
+    margin:8px 0;
+}
+
 @media(max-width:600px){
 
     h1{
@@ -239,7 +242,6 @@ button{
     }
 
 }
-
 </style>
 </head>
 
@@ -253,19 +255,23 @@ button{
 
 <div class="tabs">
 
-<button class="tab active" id="tabTasks" onclick="showSection('tasks')">
+<button class="tab active" id="tabTasks"
+onclick="showSection('tasks')">
 📋 Tasks
 </button>
 
-<button class="tab" id="tabRecords" onclick="showSection('records')">
+<button class="tab" id="tabRecords"
+onclick="showSection('records')">
 📝 Records
 </button>
 
-<button class="tab" id="tabReview" onclick="showSection('review')">
+<button class="tab" id="tabReview"
+onclick="showSection('review')">
 📊 Review
 </button>
 
-<button class="tab" id="tabSettings" onclick="showSection('settings')">
+<button class="tab" id="tabSettings"
+onclick="showSection('settings')">
 ⚙️ Settings
 </button>
 
@@ -278,15 +284,19 @@ button{
 
 <h2>📋 Tasks</h2>
 
-<input
-id="taskInput"
-type="text"
-placeholder="Enter exercise goal"
->
+<div class="info">
 
-<button class="primary" onclick="addTask()">
-＋ Add Exercise Goal
-</button>
+<strong>🏋️ Morning Exercises</strong>
+
+<p>
+Complete your planned exercise routine.
+</p>
+
+<p>
+Your individual exercises are kept on your paper list.
+</p>
+
+</div>
 
 <div id="taskList"></div>
 
@@ -299,25 +309,60 @@ placeholder="Enter exercise goal"
 
 <h2>📝 Records</h2>
 
-<input
-id="recordExercise"
-type="text"
-placeholder="Exercise name e.g. Swimming"
->
+<div class="info">
+
+<strong>🏋️ Morning Exercises</strong>
+
+<p>
+Record today's completed exercise session.
+</p>
+
+</div>
+
+<label class="settings-label">
+Duration (minutes)
+</label>
 
 <input
-id="recordAmount"
-type="text"
-placeholder="Amount e.g. 50 laps / 30 minutes / 20 reps"
+id="recordDuration"
+type="number"
+min="0"
+placeholder="e.g. 30"
 >
+
+<label class="settings-label">
+Exercises completed
+</label>
+
+<input
+id="recordCompleted"
+type="number"
+min="0"
+placeholder="e.g. 8"
+>
+
+<label class="settings-label">
+Total exercises planned
+</label>
+
+<input
+id="recordTotal"
+type="number"
+min="1"
+value="10"
+>
+
+<label class="settings-label">
+Notes
+</label>
 
 <textarea
 id="recordNotes"
-placeholder="Notes (optional)"
+placeholder="How did the session go?"
 ></textarea>
 
 <button class="primary" onclick="addRecord()">
-＋ Save Exercise Record
+＋ Save Exercise Session
 </button>
 
 <div id="recordList"></div>
@@ -331,7 +376,8 @@ placeholder="Notes (optional)"
 
 <h2>📊 Review</h2>
 
-<select id="reviewPeriod" onchange="displayReview()">
+<select id="reviewPeriod"
+onchange="displayReview()">
 
 <option value="today">Today</option>
 <option value="7">Last 7 Days</option>
@@ -344,24 +390,52 @@ placeholder="Notes (optional)"
 
 <div class="stat">
 
-<div id="recordCount" class="stat-number">
+<div id="sessionCount"
+class="stat-number">
 0
 </div>
 
 <div class="stat-label">
-Exercise Records
+Sessions
 </div>
 
 </div>
 
 <div class="stat">
 
-<div id="taskCount" class="stat-number">
+<div id="totalMinutes"
+class="stat-number">
 0
 </div>
 
 <div class="stat-label">
-Active Goals
+Total Minutes
+</div>
+
+</div>
+
+<div class="stat">
+
+<div id="averageMinutes"
+class="stat-number">
+0
+</div>
+
+<div class="stat-label">
+Average Minutes
+</div>
+
+</div>
+
+<div class="stat">
+
+<div id="completionRate"
+class="stat-number">
+0%
+</div>
+
+<div class="stat-label">
+Average Completion
 </div>
 
 </div>
@@ -438,15 +512,18 @@ id="settingNotes"
 placeholder="Add version information, notes or comments..."
 ></textarea>
 
-<button class="primary" onclick="saveSettings()">
+<button class="primary"
+onclick="saveSettings()">
 💾 Save Settings
 </button>
 
-<button class="primary" onclick="resetSettings()">
+<button class="primary"
+onclick="resetSettings()">
 ↩️ Reset Settings
 </button>
 
 </section>
+
 
 <p class="note">
 Exercise Tracker • Your personal exercise record
@@ -462,14 +539,15 @@ Exercise Tracker • Your personal exercise record
    DATA
 ========================= */
 
-let tasks =
-JSON.parse(localStorage.getItem("exerciseTasks") || "[]");
-
 let records =
-JSON.parse(localStorage.getItem("exerciseRecords") || "[]");
+JSON.parse(
+    localStorage.getItem("exerciseRecords") || "[]"
+);
 
 let settings =
-JSON.parse(localStorage.getItem("exerciseSettings") || "{}");
+JSON.parse(
+    localStorage.getItem("exerciseSettings") || "{}"
+);
 
 
 /* =========================
@@ -496,25 +574,28 @@ function applySettings(){
     document.documentElement.style
         .setProperty("--bg",bg);
 
-    document.getElementById("appTitle").textContent =
+    document.getElementById("appTitle")
+        .textContent =
         icon + " " + title;
 
-    document.getElementById("settingTitle").value =
-        title;
+    document.getElementById("settingTitle")
+        .value = title;
 
-    document.getElementById("settingIcon").value =
-        icon;
+    document.getElementById("settingIcon")
+        .value = icon;
 
-    document.getElementById("settingMain").value =
-        main;
+    document.getElementById("settingMain")
+        .value = main;
 
-    document.getElementById("settingBg").value =
-        bg;
+    document.getElementById("settingBg")
+        .value = bg;
 
-    document.getElementById("settingVersion").value =
+    document.getElementById("settingVersion")
+        .value =
         settings.version || "1.0";
 
-    document.getElementById("settingNotes").value =
+    document.getElementById("settingNotes")
+        .value =
         settings.notes || "";
 }
 
@@ -524,25 +605,31 @@ function saveSettings(){
     settings = {
 
         title:
-        document.getElementById("settingTitle").value.trim()
+        document.getElementById("settingTitle")
+        .value.trim()
         || "Exercise Tracker",
 
         icon:
-        document.getElementById("settingIcon").value.trim()
+        document.getElementById("settingIcon")
+        .value.trim()
         || "🏋️",
 
         main:
-        document.getElementById("settingMain").value,
+        document.getElementById("settingMain")
+        .value,
 
         bg:
-        document.getElementById("settingBg").value,
+        document.getElementById("settingBg")
+        .value,
 
         version:
-        document.getElementById("settingVersion").value.trim()
+        document.getElementById("settingVersion")
+        .value.trim()
         || "1.0",
 
         notes:
-        document.getElementById("settingNotes").value.trim()
+        document.getElementById("settingNotes")
+        .value.trim()
 
     };
 
@@ -560,7 +647,9 @@ function saveSettings(){
 
 function resetSettings(){
 
-    if(!confirm("Reset settings to default?")){
+    if(!confirm(
+        "Reset settings to default?"
+    )){
         return;
     }
 
@@ -592,7 +681,12 @@ function resetSettings(){
 function showSection(section){
 
     const sections =
-        ["tasks","records","review","settings"];
+        [
+            "tasks",
+            "records",
+            "review",
+            "settings"
+        ];
 
     sections.forEach(id => {
 
@@ -606,7 +700,9 @@ function showSection(section){
 
 
     document.querySelectorAll(".tab")
-        .forEach(tab => tab.classList.remove("active"));
+        .forEach(tab =>
+            tab.classList.remove("active")
+        );
 
 
     document.getElementById(
@@ -615,10 +711,6 @@ function showSection(section){
         section.slice(1)
     ).classList.add("active");
 
-
-    if(section === "tasks"){
-        displayTasks();
-    }
 
     if(section === "records"){
         displayRecords();
@@ -635,172 +727,29 @@ function showSection(section){
    TASKS
 ========================= */
 
-function addTask(){
-
-    const input =
-        document.getElementById("taskInput");
-
-    const text =
-        input.value.trim();
-
-    if(text === ""){
-        alert("Please enter an exercise goal.");
-        return;
-    }
-
-    tasks.push({
-
-        id:Date.now(),
-
-        text:text,
-
-        done:false,
-
-        date:new Date().toLocaleString()
-
-    });
-
-    localStorage.setItem(
-        "exerciseTasks",
-        JSON.stringify(tasks)
-    );
-
-    input.value = "";
-
-    displayTasks();
-
-}
-
-
 function displayTasks(){
 
     const list =
         document.getElementById("taskList");
 
-    list.innerHTML = "";
+    list.innerHTML = `
 
+        <div class="item">
 
-    if(tasks.length === 0){
-
-        list.innerHTML =
-            '<div class="empty">No exercise goals yet.</div>';
-
-        return;
-
-    }
-
-
-    tasks.forEach(task => {
-
-        const div =
-            document.createElement("div");
-
-        div.className = "item";
-
-
-        div.innerHTML = `
-
-            <h3 style="
-                ${task.done
-                ? "text-decoration:line-through;color:#777;"
-                : ""}
-            ">
-                ${escapeHtml(task.text)}
-            </h3>
+            <h3>🏋️ Morning Exercises</h3>
 
             <div class="item-date">
-                Added ${escapeHtml(task.date)}
+                Complete your planned exercise routine.
             </div>
 
-            <div class="actions">
+            <p>
+                Your exercise list is maintained separately
+                on paper.
+            </p>
 
-                <button onclick="toggleTask(${task.id})">
-                    ${task.done ? "↩️ Undo" : "✅ Done"}
-                </button>
+        </div>
 
-                <button onclick="editTask(${task.id})">
-                    ✏️ Edit
-                </button>
-
-                <button
-                    class="delete"
-                    onclick="deleteTask(${task.id})">
-                    🗑️ Delete
-                </button>
-
-            </div>
-        `;
-
-        list.appendChild(div);
-
-    });
-
-}
-
-
-function toggleTask(id){
-
-    const task =
-        tasks.find(t => t.id === id);
-
-    if(!task) return;
-
-    task.done = !task.done;
-
-    localStorage.setItem(
-        "exerciseTasks",
-        JSON.stringify(tasks)
-    );
-
-    displayTasks();
-
-}
-
-
-function editTask(id){
-
-    const task =
-        tasks.find(t => t.id === id);
-
-    if(!task) return;
-
-    const newText =
-        prompt("Edit exercise goal:",task.text);
-
-    if(newText === null) return;
-
-    const clean =
-        newText.trim();
-
-    if(clean === "") return;
-
-    task.text = clean;
-
-    localStorage.setItem(
-        "exerciseTasks",
-        JSON.stringify(tasks)
-    );
-
-    displayTasks();
-
-}
-
-
-function deleteTask(id){
-
-    if(!confirm("Delete this exercise goal?")){
-        return;
-    }
-
-    tasks =
-        tasks.filter(t => t.id !== id);
-
-    localStorage.setItem(
-        "exerciseTasks",
-        JSON.stringify(tasks)
-    );
-
-    displayTasks();
+    `;
 
 }
 
@@ -811,22 +760,77 @@ function deleteTask(id){
 
 function addRecord(){
 
-    const exercise =
-        document.getElementById("recordExercise")
-        .value.trim();
+    const duration =
+        Number(
+            document.getElementById(
+                "recordDuration"
+            ).value
+        );
 
-    const amount =
-        document.getElementById("recordAmount")
-        .value.trim();
+    const completed =
+        Number(
+            document.getElementById(
+                "recordCompleted"
+            ).value
+        );
+
+    const total =
+        Number(
+            document.getElementById(
+                "recordTotal"
+            ).value
+        );
 
     const notes =
-        document.getElementById("recordNotes")
-        .value.trim();
+        document.getElementById(
+            "recordNotes"
+        ).value.trim();
 
 
-    if(exercise === ""){
+    if(!duration || duration <= 0){
 
-        alert("Please enter the exercise name.");
+        alert(
+            "Please enter the exercise duration."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        completed < 0 ||
+        !Number.isFinite(completed)
+    ){
+
+        alert(
+            "Please enter the number of exercises completed."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        !total ||
+        total <= 0
+    ){
+
+        alert(
+            "Please enter the total number of exercises."
+        );
+
+        return;
+
+    }
+
+
+    if(completed > total){
+
+        alert(
+            "Completed exercises cannot be greater than the total."
+        );
 
         return;
 
@@ -837,9 +841,13 @@ function addRecord(){
 
         id:Date.now(),
 
-        exercise:exercise,
+        activity:"Morning Exercises",
 
-        amount:amount,
+        duration:duration,
+
+        completed:completed,
+
+        total:total,
 
         notes:notes,
 
@@ -854,19 +862,28 @@ function addRecord(){
     );
 
 
-    document.getElementById("recordExercise")
-        .value = "";
+    document.getElementById(
+        "recordDuration"
+    ).value = "";
 
-    document.getElementById("recordAmount")
-        .value = "";
+    document.getElementById(
+        "recordCompleted"
+    ).value = "";
 
-    document.getElementById("recordNotes")
-        .value = "";
+    document.getElementById(
+        "recordTotal"
+    ).value = "10";
+
+    document.getElementById(
+        "recordNotes"
+    ).value = "";
 
 
     displayRecords();
 
-    alert("Exercise record saved.");
+    alert(
+        "Exercise session saved."
+    );
 
 }
 
@@ -874,7 +891,9 @@ function addRecord(){
 function displayRecords(){
 
     const list =
-        document.getElementById("recordList");
+        document.getElementById(
+            "recordList"
+        );
 
     list.innerHTML = "";
 
@@ -882,7 +901,9 @@ function displayRecords(){
     if(records.length === 0){
 
         list.innerHTML =
-            '<div class="empty">No exercise records yet.</div>';
+            '<div class="empty">' +
+            'No exercise sessions yet.' +
+            '</div>';
 
         return;
 
@@ -905,24 +926,32 @@ function displayRecords(){
         div.className = "item";
 
 
+        const rate =
+            Math.round(
+                (record.completed /
+                record.total) * 100
+            );
+
+
         div.innerHTML = `
 
             <h3>
-                ${escapeHtml(record.exercise)}
+                🏋️ Morning Exercises
             </h3>
 
             <div class="item-date">
                 ${formatDate(record.date)}
             </div>
 
-            ${
-                record.amount
-                ?
-                `<p><strong>Amount:</strong>
-                ${escapeHtml(record.amount)}</p>`
-                :
-                ""
-            }
+            <div class="record-value">
+                ⏱️ ${record.duration} minutes
+            </div>
+
+            <div class="record-value">
+                ✅ ${record.completed}
+                / ${record.total}
+                exercises (${rate}%)
+            </div>
 
             ${
                 record.notes
@@ -934,7 +963,8 @@ function displayRecords(){
 
             <div class="actions">
 
-                <button onclick="editRecord(${record.id})">
+                <button
+                    onclick="editRecord(${record.id})">
                     ✏️ Edit
                 </button>
 
@@ -958,27 +988,38 @@ function displayRecords(){
 function editRecord(id){
 
     const record =
-        records.find(r => r.id === id);
+        records.find(
+            r => r.id === id
+        );
 
     if(!record) return;
 
 
-    const exercise =
+    const duration =
         prompt(
-            "Exercise:",
-            record.exercise
+            "Duration in minutes:",
+            record.duration
         );
 
-    if(exercise === null) return;
+    if(duration === null) return;
 
 
-    const amount =
+    const completed =
         prompt(
-            "Amount:",
-            record.amount
+            "Exercises completed:",
+            record.completed
         );
 
-    if(amount === null) return;
+    if(completed === null) return;
+
+
+    const total =
+        prompt(
+            "Total exercises:",
+            record.total
+        );
+
+    if(total === null) return;
 
 
     const notes =
@@ -990,11 +1031,43 @@ function editRecord(id){
     if(notes === null) return;
 
 
-    record.exercise =
-        exercise.trim();
+    const newDuration =
+        Number(duration);
 
-    record.amount =
-        amount.trim();
+    const newCompleted =
+        Number(completed);
+
+    const newTotal =
+        Number(total);
+
+
+    if(
+        !newDuration ||
+        newDuration <= 0 ||
+        !Number.isFinite(newCompleted) ||
+        newCompleted < 0 ||
+        !newTotal ||
+        newTotal <= 0 ||
+        newCompleted > newTotal
+    ){
+
+        alert(
+            "Please enter valid values."
+        );
+
+        return;
+
+    }
+
+
+    record.duration =
+        newDuration;
+
+    record.completed =
+        newCompleted;
+
+    record.total =
+        newTotal;
 
     record.notes =
         notes.trim();
@@ -1013,12 +1086,16 @@ function editRecord(id){
 
 function deleteRecord(id){
 
-    if(!confirm("Delete this exercise record?")){
+    if(!confirm(
+        "Delete this exercise session?"
+    )){
         return;
     }
 
     records =
-        records.filter(r => r.id !== id);
+        records.filter(
+            r => r.id !== id
+        );
 
     localStorage.setItem(
         "exerciseRecords",
@@ -1034,14 +1111,16 @@ function deleteRecord(id){
    REVIEW
 ========================= */
 
-function displayReview(){
+function getFilteredRecords(){
 
     const period =
-        document.getElementById("reviewPeriod")
-        .value;
+        document.getElementById(
+            "reviewPeriod"
+        ).value;
 
-
-    let filtered = [...records];
+    if(period === "all"){
+        return [...records];
+    }
 
 
     const now =
@@ -1050,68 +1129,138 @@ function displayReview(){
 
     if(period === "today"){
 
-        filtered =
-            records.filter(record => {
+        return records.filter(record => {
 
-                const d =
-                    new Date(record.date);
+            const d =
+                new Date(record.date);
 
-                return (
-                    d.getFullYear() === now.getFullYear() &&
-                    d.getMonth() === now.getMonth() &&
-                    d.getDate() === now.getDate()
+            return(
+                d.getFullYear()
+                === now.getFullYear()
+                &&
+                d.getMonth()
+                === now.getMonth()
+                &&
+                d.getDate()
+                === now.getDate()
+            );
+
+        });
+
+    }
+
+
+    const cutoff =
+        new Date();
+
+    cutoff.setDate(
+        cutoff.getDate()
+        - Number(period)
+    );
+
+
+    return records.filter(
+        r =>
+        new Date(r.date)
+        >= cutoff
+    );
+
+}
+
+
+function displayReview(){
+
+    const filtered =
+        getFilteredRecords();
+
+
+    const sessions =
+        filtered.length;
+
+
+    const totalMinutes =
+        filtered.reduce(
+            (sum,r) =>
+            sum + Number(r.duration || 0),
+            0
+        );
+
+
+    const averageMinutes =
+        sessions
+        ?
+        Math.round(
+            totalMinutes / sessions
+        )
+        :
+        0;
+
+
+    let completion = 0;
+
+
+    if(sessions){
+
+        const totalCompleted =
+            filtered.reduce(
+                (sum,r) =>
+                sum + Number(
+                    r.completed || 0
+                ),
+                0
+            );
+
+
+        const totalPlanned =
+            filtered.reduce(
+                (sum,r) =>
+                sum + Number(
+                    r.total || 0
+                ),
+                0
+            );
+
+
+        if(totalPlanned > 0){
+
+            completion =
+                Math.round(
+                    (totalCompleted /
+                    totalPlanned) * 100
                 );
 
-            });
+        }
 
     }
 
 
-    if(period === "7"){
-
-        const cutoff =
-            new Date();
-
-        cutoff.setDate(
-            cutoff.getDate() - 7
-        );
-
-        filtered =
-            records.filter(
-                r => new Date(r.date) >= cutoff
-            );
-
-    }
+    document.getElementById(
+        "sessionCount"
+    ).textContent = sessions;
 
 
-    if(period === "30"){
-
-        const cutoff =
-            new Date();
-
-        cutoff.setDate(
-            cutoff.getDate() - 30
-        );
-
-        filtered =
-            records.filter(
-                r => new Date(r.date) >= cutoff
-            );
-
-    }
+    document.getElementById(
+        "totalMinutes"
+    ).textContent =
+        totalMinutes;
 
 
-    document.getElementById("recordCount")
-        .textContent = filtered.length;
+    document.getElementById(
+        "averageMinutes"
+    ).textContent =
+        averageMinutes;
 
 
-    document.getElementById("taskCount")
-        .textContent =
-        tasks.filter(t => !t.done).length;
+    document.getElementById(
+        "completionRate"
+    ).textContent =
+        completion + "%";
 
 
     const list =
-        document.getElementById("reviewList");
+        document.getElementById(
+            "reviewList"
+        );
 
     list.innerHTML = "";
 
@@ -1119,7 +1268,9 @@ function displayReview(){
     if(filtered.length === 0){
 
         list.innerHTML =
-            '<div class="empty">No exercise records for this period.</div>';
+            '<div class="empty">' +
+            'No exercise sessions for this period.' +
+            '</div>';
 
         return;
 
@@ -1140,23 +1291,32 @@ function displayReview(){
             div.className = "item";
 
 
+            const rate =
+                Math.round(
+                    (record.completed /
+                    record.total) * 100
+                );
+
+
             div.innerHTML = `
 
                 <h3>
-                    ${escapeHtml(record.exercise)}
+                    🏋️ Morning Exercises
                 </h3>
 
                 <div class="item-date">
                     ${formatDate(record.date)}
                 </div>
 
-                ${
-                    record.amount
-                    ?
-                    `<p><strong>${escapeHtml(record.amount)}</strong></p>`
-                    :
-                    ""
-                }
+                <div class="record-value">
+                    ⏱️ ${record.duration} minutes
+                </div>
+
+                <div class="record-value">
+                    ✅ ${record.completed}
+                    / ${record.total}
+                    exercises (${rate}%)
+                </div>
 
                 ${
                     record.notes
@@ -1201,7 +1361,7 @@ function escapeHtml(text){
 
 
 /* =========================
-   START APP
+   START
 ========================= */
 
 applySettings();
