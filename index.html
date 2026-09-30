@@ -6,133 +6,136 @@
 
 <style>
 body{
-  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
-  background:#eef4ff;
-  color:#172033;
-  margin:0;
-  padding:18px 12px 40px;
+font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+background:#eef4ff;
+color:#172033;
+margin:0;
+padding:18px 12px 40px
 }
 
 .card{
-  max-width:600px;
-  margin:auto;
-  background:white;
-  padding:22px 18px;
-  border-radius:20px;
-  box-shadow:0 4px 15px #0001;
+max-width:650px;
+margin:auto;
+background:white;
+padding:22px 18px;
+border-radius:20px;
+box-shadow:0 4px 15px #0001
 }
 
 h1{
-  color:#2563eb;
-  text-align:center;
-  font-size:30px;
+color:#2563eb;
+text-align:center;
+font-size:30px
 }
 
-h2{
-  text-align:center;
-}
+h2{text-align:center}
 
 .tabs{
-  display:flex;
-  gap:7px;
-  margin:15px auto;
-  max-width:600px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:6px;
+margin:15px auto;
+max-width:650px
 }
 
 .tabs button{
-  flex:1;
-  padding:11px 5px;
-  border:0;
-  border-radius:10px;
-  background:#dce6ff;
-  color:#172033;
-  font-weight:bold;
+padding:11px 3px;
+border:0;
+border-radius:10px;
+background:#dce6ff;
+color:#172033;
+font-weight:bold;
+font-size:14px
 }
 
 .tabs button.active{
-  background:#2563eb;
-  color:white;
+background:#2563eb;
+color:white
 }
 
 button{
-  padding:13px;
-  margin:6px 0;
-  border:0;
-  border-radius:12px;
-  background:#2563eb;
-  color:white;
-  font-size:16px;
-  font-weight:bold;
+padding:13px;
+margin:6px 0;
+border:0;
+border-radius:12px;
+background:#2563eb;
+color:white;
+font-size:16px;
+font-weight:bold
 }
 
-.primary{
-  width:100%;
+.primary{width:100%}
+
+input,textarea,select{
+width:100%;
+padding:13px;
+box-sizing:border-box;
+border:1px solid #ccc;
+border-radius:10px;
+font-size:16px;
+margin:5px 0 10px
 }
 
-input,textarea{
-  width:100%;
-  padding:13px;
-  box-sizing:border-box;
-  border:1px solid #ccc;
-  border-radius:10px;
-  font-size:16px;
-  margin:5px 0 10px;
-}
-
-textarea{
-  min-height:110px;
-}
+textarea{min-height:110px}
 
 .item{
-  padding:15px 0;
-  border-bottom:1px solid #ddd;
+padding:15px 0;
+border-bottom:1px solid #ddd
 }
 
-.item:last-child{
-  border-bottom:0;
-}
+.item:last-child{border-bottom:0}
 
 .done{
-  text-decoration:line-through;
-  color:#888;
+text-decoration:line-through;
+color:#888
 }
 
 .small{
-  color:#777;
-  font-size:13px;
-  margin-top:4px;
+color:#777;
+font-size:13px;
+margin-top:4px
 }
 
 .actions{
-  display:flex;
-  gap:7px;
+display:flex;
+gap:7px
 }
 
 .actions button{
-  flex:1;
-  font-size:14px;
-  padding:10px 5px;
+flex:1;
+font-size:14px;
+padding:10px 5px
 }
 
-.delete{
-  background:#dc2626;
-}
+.delete{background:#dc2626}
 
 .record{
-  background:#f7f9fc;
-  padding:14px;
-  border-radius:12px;
-  margin:10px 0;
+background:#f7f9fc;
+padding:14px;
+border-radius:12px;
+margin:10px 0
 }
 
-.hidden{
-  display:none;
-}
+.hidden{display:none}
 
 .empty{
-  text-align:center;
-  color:#777;
-  padding:25px 5px;
+text-align:center;
+color:#777;
+padding:25px 5px
+}
+
+.stat{
+text-align:center;
+font-size:30px;
+font-weight:bold;
+color:#2563eb
+}
+
+.reviewCard{
+background:#f7f9fc;
+padding:14px;
+border-radius:12px;
+margin:10px 0
 }
 </style>
 </head>
@@ -145,14 +148,16 @@ textarea{
 
 <div class="tabs">
 
-<button id="taskTab"
-onclick="showTasks()">
+<button id="taskTab" onclick="showTasks()">
 📋 Tasks
 </button>
 
-<button id="recordTab"
-onclick="showRecords()">
+<button id="recordTab" onclick="showRecords()">
 📝 Records
+</button>
+
+<button id="reviewTab" onclick="showReview()">
+📊 Review
 </button>
 
 </div>
@@ -168,8 +173,7 @@ onclick="showRecords()">
 id="taskInput"
 placeholder="Enter a new task">
 
-<button
-class="primary"
+<button class="primary"
 onclick="addTask()">
 ＋ Add Task
 </button>
@@ -193,8 +197,7 @@ placeholder="Record title">
 id="recordDetails"
 placeholder="Enter details or notes..."></textarea>
 
-<button
-class="primary"
+<button class="primary"
 onclick="addRecord()">
 ＋ Add Record
 </button>
@@ -203,416 +206,597 @@ onclick="addRecord()">
 
 </div>
 
+
+<!-- REVIEW -->
+
+<div id="reviewSection" class="hidden">
+
+<h2>📊 Review</h2>
+
+<select id="reviewPeriod"
+onchange="displayReview()">
+
+<option value="today">Today</option>
+
+<option value="7">
+Last 7 Days
+</option>
+
+<option value="30">
+Last 30 Days
+</option>
+
+<option value="all">
+All Records
+</option>
+
+</select>
+
+<div class="reviewCard">
+
+<div class="small">
+Records in selected period
+</div>
+
+<div class="stat"
+id="recordCount">
+0
+</div>
+
+</div>
+
+<div id="reviewList"></div>
+
+</div>
+
 </div>
 
 
 <script>
 
-/* -------------------------
+/* =====================
    DATA
-------------------------- */
+===================== */
 
 let tasks =
-JSON.parse(localStorage.getItem("tasks") || "[]");
+JSON.parse(
+localStorage.getItem("tasks") || "[]"
+);
 
 let records =
-JSON.parse(localStorage.getItem("records") || "[]");
+JSON.parse(
+localStorage.getItem("records") || "[]"
+);
 
 
-/* -------------------------
+/* =====================
    SAVE
-------------------------- */
+===================== */
 
 function saveTasks(){
 
-  localStorage.setItem(
-    "tasks",
-    JSON.stringify(tasks)
-  );
+localStorage.setItem(
+"tasks",
+JSON.stringify(tasks)
+);
 
 }
 
 
 function saveRecords(){
 
-  localStorage.setItem(
-    "records",
-    JSON.stringify(records)
-  );
+localStorage.setItem(
+"records",
+JSON.stringify(records)
+);
 
 }
 
 
-/* -------------------------
+/* =====================
    TASKS
-------------------------- */
+===================== */
 
 function displayTasks(){
 
-  let list =
-    document.getElementById("taskList");
+let list =
+document.getElementById("taskList");
 
-  if(tasks.length===0){
+if(tasks.length===0){
 
-    list.innerHTML =
-      "<div class='empty'>No tasks yet.</div>";
+list.innerHTML=
+"<div class='empty'>No tasks yet.</div>";
 
-    return;
-  }
+return;
+}
 
-  list.innerHTML="";
+list.innerHTML="";
 
-  tasks.forEach(function(task,index){
+tasks.forEach(function(task,index){
 
-    let div =
-      document.createElement("div");
+let div=
+document.createElement("div");
 
-    div.className="item";
+div.className="item";
 
-    div.innerHTML=`
+div.innerHTML=`
 
-      <div class="${task.done ? "done" : ""}">
-        <strong>${task.text}</strong>
-      </div>
+<div class="${task.done?"done":""}">
+<strong>${task.text}</strong>
+</div>
 
-      <div class="small">
-        ${task.date}
-      </div>
+<div class="small">
+${task.date}
+</div>
 
-      <div class="actions">
+<div class="actions">
 
-        <button
-        onclick="completeTask(${index})">
-        ${task.done ? "↩️ Undo" : "✅ Done"}
-        </button>
+<button
+onclick="completeTask(${index})">
+${task.done?"↩️ Undo":"✅ Done"}
+</button>
 
-        <button
-        onclick="editTask(${index})">
-        ✏️ Edit
-        </button>
+<button
+onclick="editTask(${index})">
+✏️ Edit
+</button>
 
-        <button
-        class="delete"
-        onclick="deleteTask(${index})">
-        🗑️ Delete
-        </button>
+<button
+class="delete"
+onclick="deleteTask(${index})">
+🗑️ Delete
+</button>
 
-      </div>
+</div>
+`;
 
-    `;
+list.appendChild(div);
 
-    list.appendChild(div);
-
-  });
+});
 
 }
 
 
 function addTask(){
 
-  let input =
-    document.getElementById("taskInput");
+let input=
+document.getElementById("taskInput");
 
-  let text =
-    input.value.trim();
+let text=
+input.value.trim();
 
-  if(text===""){
+if(text===""){
 
-    alert("Please enter a task.");
+alert("Please enter a task.");
 
-    return;
-  }
+return;
+}
 
-  tasks.push({
+tasks.push({
 
-    text:text,
+text:text,
 
-    done:false,
+done:false,
 
-    date:new Date().toLocaleString()
+date:new Date().toLocaleString()
 
-  });
+});
 
-  input.value="";
+input.value="";
 
-  saveTasks();
+saveTasks();
 
-  displayTasks();
+displayTasks();
 
 }
 
 
 function completeTask(index){
 
-  tasks[index].done =
-    !tasks[index].done;
+tasks[index].done=
+!tasks[index].done;
 
-  saveTasks();
+saveTasks();
 
-  displayTasks();
+displayTasks();
 
 }
 
 
 function editTask(index){
 
-  let newText =
-    prompt(
-      "Edit task:",
-      tasks[index].text
-    );
+let newText=
+prompt(
+"Edit task:",
+tasks[index].text
+);
 
-  if(newText===null)return;
+if(newText===null)return;
 
-  newText=newText.trim();
+newText=newText.trim();
 
-  if(newText==="")return;
+if(newText==="")return;
 
-  tasks[index].text=newText;
+tasks[index].text=newText;
 
-  saveTasks();
+saveTasks();
 
-  displayTasks();
+displayTasks();
 
 }
 
 
 function deleteTask(index){
 
-  if(confirm("Delete this task?")){
+if(confirm("Delete this task?")){
 
-    tasks.splice(index,1);
+tasks.splice(index,1);
 
-    saveTasks();
+saveTasks();
 
-    displayTasks();
+displayTasks();
 
-  }
+}
 
 }
 
 
-/* -------------------------
+/* =====================
    RECORDS
-------------------------- */
+===================== */
 
 function displayRecords(){
 
-  let list =
-    document.getElementById("recordList");
+let list=
+document.getElementById("recordList");
 
-  if(records.length===0){
+if(records.length===0){
 
-    list.innerHTML =
-      "<div class='empty'>No records yet.</div>";
+list.innerHTML=
+"<div class='empty'>No records yet.</div>";
 
-    return;
-  }
+return;
+}
 
-  list.innerHTML="";
+list.innerHTML="";
 
-  records
-  .slice()
-  .reverse()
-  .forEach(function(record,index){
+records
+.slice()
+.reverse()
+.forEach(function(record,index){
 
-    let actualIndex =
-      records.length - 1 - index;
+let actualIndex=
+records.length-1-index;
 
-    let div =
-      document.createElement("div");
+let div=
+document.createElement("div");
 
-    div.className="record";
+div.className="record";
 
-    div.innerHTML=`
+div.innerHTML=`
 
-      <strong>
-        ${record.title}
-      </strong>
+<strong>
+${record.title}
+</strong>
 
-      <div class="small">
-        ${record.date}
-      </div>
+<div class="small">
+${record.date}
+</div>
 
-      <p>
-        ${record.details}
-      </p>
+<p>
+${record.details}
+</p>
 
-      <div class="actions">
+<div class="actions">
 
-        <button
-        onclick="editRecord(${actualIndex})">
-        ✏️ Edit
-        </button>
+<button
+onclick="editRecord(${actualIndex})">
+✏️ Edit
+</button>
 
-        <button
-        class="delete"
-        onclick="deleteRecord(${actualIndex})">
-        🗑️ Delete
-        </button>
+<button
+class="delete"
+onclick="deleteRecord(${actualIndex})">
+🗑️ Delete
+</button>
 
-      </div>
+</div>
+`;
 
-    `;
+list.appendChild(div);
 
-    list.appendChild(div);
-
-  });
+});
 
 }
 
 
 function addRecord(){
 
-  let title =
-    document
-    .getElementById("recordTitle")
-    .value.trim();
+let title=
+document
+.getElementById("recordTitle")
+.value.trim();
 
-  let details =
-    document
-    .getElementById("recordDetails")
-    .value.trim();
+let details=
+document
+.getElementById("recordDetails")
+.value.trim();
 
-  if(title===""){
+if(title===""){
 
-    alert("Please enter a record title.");
+alert("Please enter a record title.");
 
-    return;
-  }
+return;
+}
 
-  records.push({
+records.push({
 
-    title:title,
+title:title,
 
-    details:details,
+details:details,
 
-    date:new Date().toLocaleString()
+date:new Date().toISOString()
 
-  });
+});
 
-  document.getElementById(
-    "recordTitle"
-  ).value="";
+document.getElementById(
+"recordTitle"
+).value="";
 
-  document.getElementById(
-    "recordDetails"
-  ).value="";
+document.getElementById(
+"recordDetails"
+).value="";
 
-  saveRecords();
+saveRecords();
 
-  displayRecords();
+displayRecords();
 
 }
 
 
 function editRecord(index){
 
-  let record=records[index];
+let record=records[index];
 
-  let newTitle =
-    prompt(
-      "Edit record title:",
-      record.title
-    );
+let newTitle=
+prompt(
+"Edit record title:",
+record.title
+);
 
-  if(newTitle===null)return;
+if(newTitle===null)return;
 
-  newTitle=newTitle.trim();
+newTitle=newTitle.trim();
 
-  if(newTitle==="")return;
+if(newTitle==="")return;
 
-  let newDetails =
-    prompt(
-      "Edit record details:",
-      record.details
-    );
+let newDetails=
+prompt(
+"Edit record details:",
+record.details
+);
 
-  if(newDetails===null)return;
+if(newDetails===null)return;
 
-  record.title=newTitle;
+record.title=newTitle;
 
-  record.details=newDetails;
+record.details=newDetails;
 
-  saveRecords();
+saveRecords();
 
-  displayRecords();
+displayRecords();
 
 }
 
 
 function deleteRecord(index){
 
-  if(confirm("Delete this record?")){
+if(confirm("Delete this record?")){
 
-    records.splice(index,1);
+records.splice(index,1);
 
-    saveRecords();
+saveRecords();
 
-    displayRecords();
+displayRecords();
 
-  }
+}
 
 }
 
 
-/* -------------------------
+/* =====================
+   REVIEW
+===================== */
+
+function displayReview(){
+
+let period=
+document.getElementById(
+"reviewPeriod"
+).value;
+
+let list=
+records.slice();
+
+let now=new Date();
+
+if(period!=="all"){
+
+let days=
+period==="today"
+?1
+:Number(period);
+
+let start=new Date();
+
+start.setHours(0,0,0,0);
+
+start.setDate(
+start.getDate()-days+1
+);
+
+list=list.filter(function(record){
+
+return new Date(record.date)>=start;
+
+});
+
+}
+
+document.getElementById(
+"recordCount"
+).textContent=
+list.length;
+
+let review=
+document.getElementById(
+"reviewList"
+);
+
+if(list.length===0){
+
+review.innerHTML=
+"<div class='empty'>No records for this period.</div>";
+
+return;
+}
+
+list.sort(function(a,b){
+
+return new Date(b.date)-
+new Date(a.date);
+
+});
+
+review.innerHTML="";
+
+list.forEach(function(record){
+
+let div=
+document.createElement("div");
+
+div.className="reviewCard";
+
+div.innerHTML=`
+
+<strong>
+${record.title}
+</strong>
+
+<div class="small">
+${new Date(record.date)
+.toLocaleString()}
+</div>
+
+<p>
+${record.details}
+</p>
+
+`;
+
+review.appendChild(div);
+
+});
+
+}
+
+
+/* =====================
    TABS
-------------------------- */
+===================== */
+
+function clearTabs(){
+
+document
+.querySelectorAll(".tabs button")
+.forEach(function(button){
+
+button.classList.remove("active");
+
+});
+
+}
+
+
+function hideSections(){
+
+document
+.getElementById("tasksSection")
+.classList.add("hidden");
+
+document
+.getElementById("recordsSection")
+.classList.add("hidden");
+
+document
+.getElementById("reviewSection")
+.classList.add("hidden");
+
+}
+
 
 function showTasks(){
 
-  document
-  .getElementById("tasksSection")
-  .classList.remove("hidden");
+hideSections();
 
-  document
-  .getElementById("recordsSection")
-  .classList.add("hidden");
+clearTabs();
 
-  document
-  .getElementById("taskTab")
-  .classList.add("active");
+document
+.getElementById("tasksSection")
+.classList.remove("hidden");
 
-  document
-  .getElementById("recordTab")
-  .classList.remove("active");
+document
+.getElementById("taskTab")
+.classList.add("active");
+
+displayTasks();
 
 }
 
 
 function showRecords(){
 
-  document
-  .getElementById("recordsSection")
-  .classList.remove("hidden");
+hideSections();
 
-  document
-  .getElementById("tasksSection")
-  .classList.add("hidden");
+clearTabs();
 
-  document
-  .getElementById("recordTab")
-  .classList.add("active");
+document
+.getElementById("recordsSection")
+.classList.remove("hidden");
 
-  document
-  .getElementById("taskTab")
-  .classList.remove("active");
+document
+.getElementById("recordTab")
+.classList.add("active");
 
-  displayRecords();
+displayRecords();
 
 }
 
 
-/* -------------------------
-   START
-------------------------- */
+function showReview(){
 
-displayTasks();
+hideSections();
+
+clearTabs();
 
 document
-.getElementById("taskTab")
+.getElementById("reviewSection")
+.classList.remove("hidden");
+
+document
+.getElementById("reviewTab")
 .classList.add("active");
+
+displayReview();
+
+}
+
+
+/* =====================
+   START
+===================== */
+
+showTasks();
 
 </script>
 
