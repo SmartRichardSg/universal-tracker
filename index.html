@@ -2,245 +2,238 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Exercise Tracker</title>
 
 <style>
 :root{
-    --main:#2864e8;
-    --bg:#eef4ff;
-    --text:#172033;
-    --card:#ffffff;
-    --danger:#e52525;
-    --muted:#777;
+ --main:#2864e8;
+ --bg:#eef4ff;
+ --text:#172033;
+ --card:#fff;
+ --danger:#e52525;
+ --muted:#777;
 }
 
-*{
-    box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
-    margin:0;
-    padding:20px 14px 50px;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-    background:var(--bg);
-    color:var(--text);
+ margin:0;
+ padding:20px 14px 50px;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+ background:var(--bg);
+ color:var(--text);
 }
 
 .container{
-    max-width:800px;
-    margin:auto;
+ max-width:800px;
+ margin:auto;
 }
 
 .card{
-    background:var(--card);
-    border-radius:28px;
-    padding:28px 24px;
-    box-shadow:0 8px 30px rgba(0,0,0,.08);
+ background:var(--card);
+ border-radius:28px;
+ padding:28px 24px;
+ box-shadow:0 8px 30px #00000014;
 }
 
 h1{
-    text-align:center;
-    font-size:42px;
-    margin:10px 0 35px;
-    color:var(--main);
+ text-align:center;
+ font-size:42px;
+ margin:10px 0 35px;
+ color:var(--main);
 }
 
 h2{
-    text-align:center;
-    font-size:38px;
-    margin:35px 0 25px;
+ text-align:center;
+ font-size:38px;
+ margin:35px 0 25px;
 }
 
 h3{
-    margin:0 0 8px;
-    font-size:24px;
+ margin:0 0 8px;
+ font-size:24px;
 }
 
 .tabs{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:10px;
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:10px;
 }
 
 .tab{
-    border:0;
-    border-radius:20px;
-    padding:18px 8px;
-    background:#dbe6ff;
-    color:var(--text);
-    font-size:16px;
-    font-weight:800;
+ border:0;
+ border-radius:20px;
+ padding:18px 8px;
+ background:#dbe6ff;
+ color:var(--text);
+ font-size:16px;
+ font-weight:800;
 }
 
 .tab.active{
-    background:var(--main);
-    color:white;
+ background:var(--main);
+ color:#fff;
 }
 
-input,
-textarea,
-select{
-    width:100%;
-    padding:18px;
-    border:2px solid #d5d5d5;
-    border-radius:18px;
-    font-size:18px;
-    margin-bottom:14px;
-    background:white;
+input,textarea,select{
+ width:100%;
+ padding:18px;
+ border:2px solid #d5d5d5;
+ border-radius:18px;
+ font-size:18px;
+ margin-bottom:14px;
+ background:#fff;
 }
 
 textarea{
-    min-height:120px;
-    resize:vertical;
+ min-height:120px;
+ resize:vertical;
 }
 
 button{
-    font-family:inherit;
-    cursor:pointer;
+ font-family:inherit;
+ cursor:pointer;
 }
 
 .primary{
-    width:100%;
-    padding:19px;
-    border:0;
-    border-radius:18px;
-    background:var(--main);
-    color:white;
-    font-size:21px;
-    font-weight:800;
-    margin-bottom:18px;
+ width:100%;
+ padding:19px;
+ border:0;
+ border-radius:18px;
+ background:var(--main);
+ color:#fff;
+ font-size:21px;
+ font-weight:800;
+ margin-bottom:18px;
 }
 
 .danger{
-    background:var(--danger);
+ background:var(--danger);
 }
 
 .item{
-    background:#f7f9fd;
-    border-radius:20px;
-    padding:20px;
-    margin:18px 0;
+ background:#f7f9fd;
+ border-radius:20px;
+ padding:20px;
+ margin:18px 0;
 }
 
 .item-date{
-    color:#777;
-    font-size:16px;
-    margin-bottom:14px;
+ color:var(--muted);
+ font-size:16px;
+ margin-bottom:14px;
 }
 
 .actions{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:10px;
-    margin-top:15px;
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:10px;
+ margin-top:15px;
 }
 
 .actions button{
-    padding:14px 8px;
-    border:0;
-    border-radius:14px;
-    color:white;
-    background:var(--main);
-    font-weight:800;
-    font-size:16px;
+ padding:14px 8px;
+ border:0;
+ border-radius:14px;
+ color:#fff;
+ background:var(--main);
+ font-weight:800;
+ font-size:16px;
 }
 
 .actions .delete{
-    background:var(--danger);
+ background:var(--danger);
 }
 
 .empty{
-    text-align:center;
-    color:#777;
-    font-size:18px;
-    padding:25px;
+ text-align:center;
+ color:var(--muted);
+ font-size:18px;
+ padding:25px;
 }
 
 .section{
-    margin-top:20px;
-}
-
-.stat-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:14px;
-    margin:20px 0;
-}
-
-.stat{
-    background:#f4f7fc;
-    border-radius:20px;
-    padding:22px;
-    text-align:center;
-}
-
-.stat-number{
-    font-size:38px;
-    font-weight:900;
-    color:var(--main);
-}
-
-.stat-label{
-    color:#777;
-    font-weight:700;
-}
-
-.settings-label{
-    display:block;
-    font-size:19px;
-    font-weight:800;
-    margin:18px 0 8px;
+ margin-top:20px;
 }
 
 .hidden{
-    display:none;
-}
-
-.note{
-    color:#777;
-    font-size:15px;
-    text-align:center;
-    margin-top:20px;
+ display:none;
 }
 
 .info{
-    background:#f4f7fc;
-    border-radius:20px;
-    padding:18px;
-    margin-bottom:20px;
-    text-align:center;
+ background:#f4f7fc;
+ border-radius:20px;
+ padding:18px;
+ margin-bottom:20px;
+ text-align:center;
 }
 
 .info strong{
-    font-size:22px;
+ font-size:22px;
+}
+
+.stat-grid{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:14px;
+ margin:20px 0;
+}
+
+.stat{
+ background:#f4f7fc;
+ border-radius:20px;
+ padding:22px;
+ text-align:center;
+}
+
+.stat-number{
+ font-size:38px;
+ font-weight:900;
+ color:var(--main);
+}
+
+.stat-label{
+ color:var(--muted);
+ font-weight:700;
+}
+
+.settings-label{
+ display:block;
+ font-size:19px;
+ font-weight:800;
+ margin:18px 0 8px;
+}
+
+.note{
+ color:var(--muted);
+ font-size:15px;
+ text-align:center;
+ margin-top:20px;
 }
 
 .record-value{
-    font-size:21px;
-    font-weight:800;
-    margin:8px 0;
+ font-size:21px;
+ font-weight:800;
+ margin:8px 0;
 }
 
 @media(max-width:600px){
+ h1{
+  font-size:38px;
+ }
 
-    h1{
-        font-size:38px;
-    }
+ h2{
+  font-size:34px;
+ }
 
-    h2{
-        font-size:34px;
-    }
+ .tabs{
+  grid-template-columns:repeat(2,1fr);
+ }
 
-    .tabs{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .actions{
-        grid-template-columns:1fr;
-    }
-
+ .actions{
+  grid-template-columns:1fr;
+ }
 }
 </style>
 </head>
@@ -248,29 +241,32 @@ button{
 <body>
 
 <div class="container">
-
 <div class="card">
 
 <h1 id="appTitle">🏋️ Exercise Tracker</h1>
 
 <div class="tabs">
 
-<button class="tab active" id="tabTasks"
+<button class="tab active"
+id="tabTasks"
 onclick="showSection('tasks')">
 📋 Tasks
 </button>
 
-<button class="tab" id="tabRecords"
+<button class="tab"
+id="tabRecords"
 onclick="showSection('records')">
 📝 Records
 </button>
 
-<button class="tab" id="tabReview"
+<button class="tab"
+id="tabReview"
 onclick="showSection('review')">
 📊 Review
 </button>
 
-<button class="tab" id="tabSettings"
+<button class="tab"
+id="tabSettings"
 onclick="showSection('settings')">
 ⚙️ Settings
 </button>
@@ -278,32 +274,30 @@ onclick="showSection('settings')">
 </div>
 
 
-<!-- ================= TASKS ================= -->
+<!-- TASKS -->
 
 <section id="tasks" class="section">
 
 <h2>📋 Tasks</h2>
 
-<div class="info">
+<div class="item">
 
-<strong>🏋️ Morning Exercises</strong>
+<h3>🏋️ Morning Exercises</h3>
 
-<p>
+<div class="item-date">
 Complete your planned exercise routine.
-</p>
+</div>
 
 <p>
-Your individual exercises are kept on your paper list.
+Your individual exercises are maintained separately on your paper list.
 </p>
 
 </div>
 
-<div id="taskList"></div>
-
 </section>
 
 
-<!-- ================= RECORDS ================= -->
+<!-- RECORDS -->
 
 <section id="records" class="section hidden">
 
@@ -319,6 +313,7 @@ Record today's completed exercise session.
 
 </div>
 
+
 <label class="settings-label">
 Duration (minutes)
 </label>
@@ -329,6 +324,7 @@ type="number"
 min="0"
 placeholder="e.g. 30"
 >
+
 
 <label class="settings-label">
 Exercises completed
@@ -341,6 +337,7 @@ min="0"
 placeholder="e.g. 8"
 >
 
+
 <label class="settings-label">
 Total exercises planned
 </label>
@@ -352,6 +349,7 @@ min="1"
 value="10"
 >
 
+
 <label class="settings-label">
 Notes
 </label>
@@ -361,7 +359,10 @@ id="recordNotes"
 placeholder="How did the session go?"
 ></textarea>
 
-<button class="primary" onclick="addRecord()">
+
+<button
+class="primary"
+onclick="addRecord()">
 ＋ Save Exercise Session
 </button>
 
@@ -370,27 +371,41 @@ placeholder="How did the session go?"
 </section>
 
 
-<!-- ================= REVIEW ================= -->
+<!-- REVIEW -->
 
 <section id="review" class="section hidden">
 
 <h2>📊 Review</h2>
 
-<select id="reviewPeriod"
+<select
+id="reviewPeriod"
 onchange="displayReview()">
 
-<option value="today">Today</option>
-<option value="7">Last 7 Days</option>
-<option value="30">Last 30 Days</option>
-<option value="all">All Records</option>
+<option value="today">
+Today
+</option>
+
+<option value="7">
+Last 7 Days
+</option>
+
+<option value="30">
+Last 30 Days
+</option>
+
+<option value="all">
+All Records
+</option>
 
 </select>
+
 
 <div class="stat-grid">
 
 <div class="stat">
 
-<div id="sessionCount"
+<div
+id="sessionCount"
 class="stat-number">
 0
 </div>
@@ -401,9 +416,11 @@ Sessions
 
 </div>
 
+
 <div class="stat">
 
-<div id="totalMinutes"
+<div
+id="totalMinutes"
 class="stat-number">
 0
 </div>
@@ -414,9 +431,11 @@ Total Minutes
 
 </div>
 
+
 <div class="stat">
 
-<div id="averageMinutes"
+<div
+id="averageMinutes"
 class="stat-number">
 0
 </div>
@@ -427,9 +446,11 @@ Average Minutes
 
 </div>
 
+
 <div class="stat">
 
-<div id="completionRate"
+<div
+id="completionRate"
 class="stat-number">
 0%
 </div>
@@ -447,11 +468,12 @@ Average Completion
 </section>
 
 
-<!-- ================= SETTINGS ================= -->
+<!-- SETTINGS -->
 
 <section id="settings" class="section hidden">
 
 <h2>⚙️ Settings</h2>
+
 
 <label class="settings-label">
 App Title
@@ -463,6 +485,7 @@ type="text"
 value="Exercise Tracker"
 >
 
+
 <label class="settings-label">
 App Icon
 </label>
@@ -472,6 +495,7 @@ id="settingIcon"
 type="text"
 value="🏋️"
 >
+
 
 <label class="settings-label">
 Main Colour
@@ -483,6 +507,7 @@ type="color"
 value="#2864e8"
 >
 
+
 <label class="settings-label">
 Background Colour
 </label>
@@ -492,6 +517,7 @@ id="settingBg"
 type="color"
 value="#eef4ff"
 >
+
 
 <label class="settings-label">
 Version
@@ -503,6 +529,7 @@ type="text"
 value="1.0"
 >
 
+
 <label class="settings-label">
 Notes / Comments
 </label>
@@ -512,12 +539,16 @@ id="settingNotes"
 placeholder="Add version information, notes or comments..."
 ></textarea>
 
-<button class="primary"
+
+<button
+class="primary"
 onclick="saveSettings()">
 💾 Save Settings
 </button>
 
-<button class="primary"
+
+<button
+class="primary"
 onclick="resetSettings()">
 ↩️ Reset Settings
 </button>
@@ -535,838 +566,731 @@ Exercise Tracker • Your personal exercise record
 
 <script>
 
-/* =========================
-   DATA
-========================= */
-
 let records =
 JSON.parse(
-    localStorage.getItem("exerciseRecords") || "[]"
+ localStorage.getItem("exerciseRecords") || "[]"
 );
 
 let settings =
 JSON.parse(
-    localStorage.getItem("exerciseSettings") || "{}"
+ localStorage.getItem("exerciseSettings") || "{}"
 );
 
 
-/* =========================
-   SETTINGS
-========================= */
-
 function applySettings(){
 
-    const title =
-        settings.title || "Exercise Tracker";
+ const title =
+ settings.title || "Exercise Tracker";
 
-    const icon =
-        settings.icon || "🏋️";
+ const icon =
+ settings.icon || "🏋️";
 
-    const main =
-        settings.main || "#2864e8";
+ const main =
+ settings.main || "#2864e8";
 
-    const bg =
-        settings.bg || "#eef4ff";
+ const bg =
+ settings.bg || "#eef4ff";
 
-    document.documentElement.style
-        .setProperty("--main",main);
 
-    document.documentElement.style
-        .setProperty("--bg",bg);
+ document.documentElement.style
+ .setProperty("--main",main);
 
-    document.getElementById("appTitle")
-        .textContent =
-        icon + " " + title;
+ document.documentElement.style
+ .setProperty("--bg",bg);
 
-    document.getElementById("settingTitle")
-        .value = title;
 
-    document.getElementById("settingIcon")
-        .value = icon;
+ document.getElementById("appTitle")
+ .textContent =
+ icon + " " + title;
 
-    document.getElementById("settingMain")
-        .value = main;
 
-    document.getElementById("settingBg")
-        .value = bg;
+ document.getElementById("settingTitle")
+ .value = title;
 
-    document.getElementById("settingVersion")
-        .value =
-        settings.version || "1.0";
+ document.getElementById("settingIcon")
+ .value = icon;
 
-    document.getElementById("settingNotes")
-        .value =
-        settings.notes || "";
+ document.getElementById("settingMain")
+ .value = main;
+
+ document.getElementById("settingBg")
+ .value = bg;
+
+ document.getElementById("settingVersion")
+ .value = settings.version || "1.0";
+
+ document.getElementById("settingNotes")
+ .value = settings.notes || "";
 }
 
 
 function saveSettings(){
 
-    settings = {
+ settings = {
 
-        title:
-        document.getElementById("settingTitle")
-        .value.trim()
-        || "Exercise Tracker",
+  title:
+  document.getElementById("settingTitle")
+  .value.trim() || "Exercise Tracker",
 
-        icon:
-        document.getElementById("settingIcon")
-        .value.trim()
-        || "🏋️",
+  icon:
+  document.getElementById("settingIcon")
+  .value.trim() || "🏋️",
 
-        main:
-        document.getElementById("settingMain")
-        .value,
+  main:
+  document.getElementById("settingMain")
+  .value,
 
-        bg:
-        document.getElementById("settingBg")
-        .value,
+  bg:
+  document.getElementById("settingBg")
+  .value,
 
-        version:
-        document.getElementById("settingVersion")
-        .value.trim()
-        || "1.0",
+  version:
+  document.getElementById("settingVersion")
+  .value.trim() || "1.0",
 
-        notes:
-        document.getElementById("settingNotes")
-        .value.trim()
+  notes:
+  document.getElementById("settingNotes")
+  .value.trim()
 
-    };
+ };
 
-    localStorage.setItem(
-        "exerciseSettings",
-        JSON.stringify(settings)
-    );
 
-    applySettings();
+ localStorage.setItem(
+  "exerciseSettings",
+  JSON.stringify(settings)
+ );
 
-    alert("Settings saved.");
+ applySettings();
 
+ alert("Settings saved.");
 }
 
 
 function resetSettings(){
 
-    if(!confirm(
-        "Reset settings to default?"
-    )){
-        return;
-    }
+ if(!confirm("Reset settings to default?"))
+ return;
 
-    settings = {
 
-        title:"Exercise Tracker",
-        icon:"🏋️",
-        main:"#2864e8",
-        bg:"#eef4ff",
-        version:"1.0",
-        notes:""
+ settings = {
 
-    };
+  title:"Exercise Tracker",
+  icon:"🏋️",
+  main:"#2864e8",
+  bg:"#eef4ff",
+  version:"1.0",
+  notes:""
 
-    localStorage.setItem(
-        "exerciseSettings",
-        JSON.stringify(settings)
-    );
+ };
 
-    applySettings();
 
+ localStorage.setItem(
+  "exerciseSettings",
+  JSON.stringify(settings)
+ );
+
+ applySettings();
 }
 
-
-/* =========================
-   NAVIGATION
-========================= */
 
 function showSection(section){
 
-    const sections =
-        [
-            "tasks",
-            "records",
-            "review",
-            "settings"
-        ];
-
-    sections.forEach(id => {
-
-        document.getElementById(id)
-            .classList.add("hidden");
-
-    });
-
-    document.getElementById(section)
-        .classList.remove("hidden");
+ [
+  "tasks",
+  "records",
+  "review",
+  "settings"
+ ].forEach(
+  id =>
+  document.getElementById(id)
+  .classList.add("hidden")
+ );
 
 
-    document.querySelectorAll(".tab")
-        .forEach(tab =>
-            tab.classList.remove("active")
-        );
+ document.getElementById(section)
+ .classList.remove("hidden");
 
 
-    document.getElementById(
-        "tab" +
-        section.charAt(0).toUpperCase() +
-        section.slice(1)
-    ).classList.add("active");
+ document.querySelectorAll(".tab")
+ .forEach(
+  t => t.classList.remove("active")
+ );
 
 
-    if(section === "records"){
-        displayRecords();
-    }
+ document.getElementById(
+  "tab" +
+  section.charAt(0).toUpperCase() +
+  section.slice(1)
+ )
+ .classList.add("active");
 
-    if(section === "review"){
-        displayReview();
-    }
+
+ if(section==="records")
+ displayRecords();
+
+
+ if(section==="review")
+ displayReview();
 
 }
 
-
-/* =========================
-   TASKS
-========================= */
-
-function displayTasks(){
-
-    const list =
-        document.getElementById("taskList");
-
-    list.innerHTML = `
-
-        <div class="item">
-
-            <h3>🏋️ Morning Exercises</h3>
-
-            <div class="item-date">
-                Complete your planned exercise routine.
-            </div>
-
-            <p>
-                Your exercise list is maintained separately
-                on paper.
-            </p>
-
-        </div>
-
-    `;
-
-}
-
-
-/* =========================
-   RECORDS
-========================= */
 
 function addRecord(){
 
-    const duration =
-        Number(
-            document.getElementById(
-                "recordDuration"
-            ).value
-        );
+ const duration =
+ Number(
+  document.getElementById(
+   "recordDuration"
+  ).value
+ );
 
-    const completed =
-        Number(
-            document.getElementById(
-                "recordCompleted"
-            ).value
-        );
+ const completed =
+ Number(
+  document.getElementById(
+   "recordCompleted"
+  ).value
+ );
 
-    const total =
-        Number(
-            document.getElementById(
-                "recordTotal"
-            ).value
-        );
+ const total =
+ Number(
+  document.getElementById(
+   "recordTotal"
+  ).value
+ );
 
-    const notes =
-        document.getElementById(
-            "recordNotes"
-        ).value.trim();
-
-
-    if(!duration || duration <= 0){
-
-        alert(
-            "Please enter the exercise duration."
-        );
-
-        return;
-
-    }
+ const notes =
+ document.getElementById(
+  "recordNotes"
+ ).value.trim();
 
 
-    if(
-        completed < 0 ||
-        !Number.isFinite(completed)
-    ){
+ if(!duration || duration<=0){
 
-        alert(
-            "Please enter the number of exercises completed."
-        );
+  alert(
+   "Please enter the exercise duration."
+  );
 
-        return;
-
-    }
+  return;
+ }
 
 
-    if(
-        !total ||
-        total <= 0
-    ){
+ if(!Number.isFinite(completed)
+ || completed<0){
 
-        alert(
-            "Please enter the total number of exercises."
-        );
+  alert(
+   "Please enter the number of exercises completed."
+  );
 
-        return;
-
-    }
+  return;
+ }
 
 
-    if(completed > total){
+ if(!total || total<=0){
 
-        alert(
-            "Completed exercises cannot be greater than the total."
-        );
+  alert(
+   "Please enter the total number of exercises."
+  );
 
-        return;
-
-    }
-
-
-    records.push({
-
-        id:Date.now(),
-
-        activity:"Morning Exercises",
-
-        duration:duration,
-
-        completed:completed,
-
-        total:total,
-
-        notes:notes,
-
-        date:new Date().toISOString()
-
-    });
+  return;
+ }
 
 
-    localStorage.setItem(
-        "exerciseRecords",
-        JSON.stringify(records)
-    );
+ if(completed>total){
+
+  alert(
+   "Completed exercises cannot be greater than the total."
+  );
+
+  return;
+ }
 
 
-    document.getElementById(
-        "recordDuration"
-    ).value = "";
+ records.push({
 
-    document.getElementById(
-        "recordCompleted"
-    ).value = "";
+  id:Date.now(),
 
-    document.getElementById(
-        "recordTotal"
-    ).value = "10";
+  activity:
+  "Morning Exercises",
 
-    document.getElementById(
-        "recordNotes"
-    ).value = "";
+  duration,
+
+  completed,
+
+  total,
+
+  notes,
+
+  date:
+  new Date().toISOString()
+
+ });
 
 
-    displayRecords();
+ localStorage.setItem(
+  "exerciseRecords",
+  JSON.stringify(records)
+ );
 
-    alert(
-        "Exercise session saved."
-    );
+
+ document.getElementById(
+  "recordDuration"
+ ).value="";
+
+ document.getElementById(
+  "recordCompleted"
+ ).value="";
+
+ document.getElementById(
+  "recordTotal"
+ ).value="10";
+
+ document.getElementById(
+  "recordNotes"
+ ).value="";
+
+
+ displayRecords();
+
+ alert(
+  "Exercise session saved."
+ );
 
 }
 
 
 function displayRecords(){
 
-    const list =
-        document.getElementById(
-            "recordList"
-        );
+ const list =
+ document.getElementById(
+  "recordList"
+ );
 
-    list.innerHTML = "";
-
-
-    if(records.length === 0){
-
-        list.innerHTML =
-            '<div class="empty">' +
-            'No exercise sessions yet.' +
-            '</div>';
-
-        return;
-
-    }
+ list.innerHTML="";
 
 
-    const sorted =
-        [...records].sort(
-            (a,b) =>
-            new Date(b.date) -
-            new Date(a.date)
-        );
+ if(!records.length){
+
+  list.innerHTML =
+  '<div class="empty">No exercise sessions yet.</div>';
+
+  return;
+ }
 
 
-    sorted.forEach(record => {
+ [
+  ...records
+ ]
+ .sort(
+  (a,b) =>
+  new Date(b.date) -
+  new Date(a.date)
+ )
+ .forEach(r => {
 
-        const div =
-            document.createElement("div");
-
-        div.className = "item";
-
-
-        const rate =
-            Math.round(
-                (record.completed /
-                record.total) * 100
-            );
+  const rate =
+  Math.round(
+   r.completed /
+   r.total *
+   100
+  );
 
 
-        div.innerHTML = `
+  const div =
+  document.createElement("div");
 
-            <h3>
-                🏋️ Morning Exercises
-            </h3>
+  div.className="item";
 
-            <div class="item-date">
-                ${formatDate(record.date)}
-            </div>
 
-            <div class="record-value">
-                ⏱️ ${record.duration} minutes
-            </div>
+  div.innerHTML = `
 
-            <div class="record-value">
-                ✅ ${record.completed}
-                / ${record.total}
-                exercises (${rate}%)
-            </div>
+<h3>🏋️ Morning Exercises</h3>
 
-            ${
-                record.notes
-                ?
-                `<p>${escapeHtml(record.notes)}</p>`
-                :
-                ""
-            }
+<div class="item-date">
+${formatDate(r.date)}
+</div>
 
-            <div class="actions">
+<div class="record-value">
+⏱️ ${r.duration} minutes
+</div>
 
-                <button
-                    onclick="editRecord(${record.id})">
-                    ✏️ Edit
-                </button>
+<div class="record-value">
+✅ ${r.completed} / ${r.total}
+exercises (${rate}%)
+</div>
 
-                <button
-                    class="delete"
-                    onclick="deleteRecord(${record.id})">
-                    🗑️ Delete
-                </button>
+${r.notes ?
+`<p>${escapeHtml(r.notes)}</p>`
+:""}
 
-            </div>
+<div class="actions">
 
-        `;
+<button
+onclick="editRecord(${r.id})">
+✏️ Edit
+</button>
 
-        list.appendChild(div);
+<button
+class="delete"
+onclick="deleteRecord(${r.id})">
+🗑️ Delete
+</button>
 
-    });
+</div>
+`;
+
+  list.appendChild(div);
+
+ });
 
 }
 
 
 function editRecord(id){
 
-    const record =
-        records.find(
-            r => r.id === id
-        );
+ const r =
+ records.find(
+  x => x.id===id
+ );
 
-    if(!record) return;
-
-
-    const duration =
-        prompt(
-            "Duration in minutes:",
-            record.duration
-        );
-
-    if(duration === null) return;
+ if(!r) return;
 
 
-    const completed =
-        prompt(
-            "Exercises completed:",
-            record.completed
-        );
+ const duration =
+ prompt(
+  "Duration in minutes:",
+  r.duration
+ );
 
-    if(completed === null) return;
-
-
-    const total =
-        prompt(
-            "Total exercises:",
-            record.total
-        );
-
-    if(total === null) return;
+ if(duration===null)
+ return;
 
 
-    const notes =
-        prompt(
-            "Notes:",
-            record.notes
-        );
+ const completed =
+ prompt(
+  "Exercises completed:",
+  r.completed
+ );
 
-    if(notes === null) return;
-
-
-    const newDuration =
-        Number(duration);
-
-    const newCompleted =
-        Number(completed);
-
-    const newTotal =
-        Number(total);
+ if(completed===null)
+ return;
 
 
-    if(
-        !newDuration ||
-        newDuration <= 0 ||
-        !Number.isFinite(newCompleted) ||
-        newCompleted < 0 ||
-        !newTotal ||
-        newTotal <= 0 ||
-        newCompleted > newTotal
-    ){
+ const total =
+ prompt(
+  "Total exercises:",
+  r.total
+ );
 
-        alert(
-            "Please enter valid values."
-        );
-
-        return;
-
-    }
+ if(total===null)
+ return;
 
 
-    record.duration =
-        newDuration;
+ const notes =
+ prompt(
+  "Notes:",
+  r.notes || ""
+ );
 
-    record.completed =
-        newCompleted;
-
-    record.total =
-        newTotal;
-
-    record.notes =
-        notes.trim();
+ if(notes===null)
+ return;
 
 
-    localStorage.setItem(
-        "exerciseRecords",
-        JSON.stringify(records)
-    );
+ const d=Number(duration);
+ const c=Number(completed);
+ const t=Number(total);
 
 
-    displayRecords();
+ if(
+  !d ||
+  d<=0 ||
+  !Number.isFinite(c) ||
+  c<0 ||
+  !t ||
+  t<=0 ||
+  c>t
+ ){
+
+  alert(
+   "Please enter valid values."
+  );
+
+  return;
+ }
+
+
+ r.duration=d;
+ r.completed=c;
+ r.total=t;
+ r.notes=notes.trim();
+
+
+ localStorage.setItem(
+  "exerciseRecords",
+  JSON.stringify(records)
+ );
+
+
+ displayRecords();
 
 }
 
 
 function deleteRecord(id){
 
-    if(!confirm(
-        "Delete this exercise session?"
-    )){
-        return;
-    }
+ if(
+  !confirm(
+   "Delete this exercise session?"
+  )
+ )
+ return;
 
-    records =
-        records.filter(
-            r => r.id !== id
-        );
 
-    localStorage.setItem(
-        "exerciseRecords",
-        JSON.stringify(records)
-    );
+ records =
+ records.filter(
+  r => r.id!==id
+ );
 
-    displayRecords();
+
+ localStorage.setItem(
+  "exerciseRecords",
+  JSON.stringify(records)
+ );
+
+
+ displayRecords();
+ displayReview();
 
 }
 
 
-/* =========================
-   REVIEW
-========================= */
-
 function getFilteredRecords(){
 
-    const period =
-        document.getElementById(
-            "reviewPeriod"
-        ).value;
-
-    if(period === "all"){
-        return [...records];
-    }
+ const period =
+ document.getElementById(
+  "reviewPeriod"
+ ).value;
 
 
-    const now =
-        new Date();
+ if(period==="all")
+ return [...records];
 
 
-    if(period === "today"){
-
-        return records.filter(record => {
-
-            const d =
-                new Date(record.date);
-
-            return(
-                d.getFullYear()
-                === now.getFullYear()
-                &&
-                d.getMonth()
-                === now.getMonth()
-                &&
-                d.getDate()
-                === now.getDate()
-            );
-
-        });
-
-    }
+ const now=new Date();
 
 
-    const cutoff =
-        new Date();
+ if(period==="today"){
 
-    cutoff.setDate(
-        cutoff.getDate()
-        - Number(period)
-    );
+  return records.filter(r => {
+
+   const d =
+   new Date(r.date);
+
+   return(
+    d.getFullYear() ===
+    now.getFullYear() &&
+
+    d.getMonth() ===
+    now.getMonth() &&
+
+    d.getDate() ===
+    now.getDate()
+   );
+
+  });
+
+ }
 
 
-    return records.filter(
-        r =>
-        new Date(r.date)
-        >= cutoff
-    );
+ const cutoff=new Date();
+
+ cutoff.setDate(
+ cutoff.getDate() -
+ Number(period)
+ );
+
+
+ return records.filter(
+  r =>
+  new Date(r.date)>=cutoff
+ );
 
 }
 
 
 function displayReview(){
 
-    const filtered =
-        getFilteredRecords();
+ const filtered =
+ getFilteredRecords();
 
 
-    const sessions =
-        filtered.length;
+ const sessions =
+ filtered.length;
 
 
-    const totalMinutes =
-        filtered.reduce(
-            (sum,r) =>
-            sum + Number(r.duration || 0),
-            0
-        );
+ const totalMinutes =
+ filtered.reduce(
+  (s,r) =>
+  s + Number(r.duration || 0),
+  0
+ );
 
 
-    const averageMinutes =
-        sessions
-        ?
-        Math.round(
-            totalMinutes / sessions
-        )
-        :
-        0;
+ const averageMinutes =
+ sessions
+ ?
+ Math.round(
+  totalMinutes /
+  sessions
+ )
+ : 0;
 
 
-    let completion = 0;
+ const completed =
+ filtered.reduce(
+  (s,r) =>
+  s + Number(r.completed || 0),
+  0
+ );
 
 
-    if(sessions){
-
-        const totalCompleted =
-            filtered.reduce(
-                (sum,r) =>
-                sum + Number(
-                    r.completed || 0
-                ),
-                0
-            );
+ const planned =
+ filtered.reduce(
+  (s,r) =>
+  s + Number(r.total || 0),
+  0
+ );
 
 
-        const totalPlanned =
-            filtered.reduce(
-                (sum,r) =>
-                sum + Number(
-                    r.total || 0
-                ),
-                0
-            );
+ const completion =
+ planned
+ ?
+ Math.round(
+  completed /
+  planned *
+  100
+ )
+ : 0;
 
 
-        if(totalPlanned > 0){
-
-            completion =
-                Math.round(
-                    (totalCompleted /
-                    totalPlanned) * 100
-                );
-
-        }
-
-    }
+ document.getElementById(
+  "sessionCount"
+ ).textContent =
+ sessions;
 
 
-    document.getElementById(
-        "sessionCount"
-    ).textContent = sessions;
+ document.getElementById(
+  "totalMinutes"
+ ).textContent =
+ totalMinutes;
 
 
-    document.getElementById(
-        "totalMinutes"
-    ).textContent =
-        totalMinutes;
+ document.getElementById(
+  "averageMinutes"
+ ).textContent =
+ averageMinutes;
 
 
-    document.getElementById(
-        "averageMinutes"
-    ).textContent =
-        averageMinutes;
+ document.getElementById(
+  "completionRate"
+ ).textContent =
+ completion + "%";
 
 
-    document.getElementById(
-        "completionRate"
-    ).textContent =
-        completion + "%";
+ const list =
+ document.getElementById(
+  "reviewList"
+ );
+
+ list.innerHTML="";
 
 
-    const list =
-        document.getElementById(
-            "reviewList"
-        );
+ if(!filtered.length){
 
-    list.innerHTML = "";
+  list.innerHTML =
+  '<div class="empty">No exercise sessions for this period.</div>';
 
-
-    if(filtered.length === 0){
-
-        list.innerHTML =
-            '<div class="empty">' +
-            'No exercise sessions for this period.' +
-            '</div>';
-
-        return;
-
-    }
+  return;
+ }
 
 
-    filtered
-        .sort(
-            (a,b) =>
-            new Date(b.date) -
-            new Date(a.date)
-        )
-        .forEach(record => {
+ filtered
+ .sort(
+  (a,b) =>
+  new Date(b.date) -
+  new Date(a.date)
+ )
+ .forEach(r => {
 
-            const div =
-                document.createElement("div");
-
-            div.className = "item";
-
-
-            const rate =
-                Math.round(
-                    (record.completed /
-                    record.total) * 100
-                );
+  const rate =
+  Math.round(
+   r.completed /
+   r.total *
+   100
+  );
 
 
-            div.innerHTML = `
+  const div =
+  document.createElement("div");
 
-                <h3>
-                    🏋️ Morning Exercises
-                </h3>
+  div.className="item";
 
-                <div class="item-date">
-                    ${formatDate(record.date)}
-                </div>
 
-                <div class="record-value">
-                    ⏱️ ${record.duration} minutes
-                </div>
+  div.innerHTML = `
 
-                <div class="record-value">
-                    ✅ ${record.completed}
-                    / ${record.total}
-                    exercises (${rate}%)
-                </div>
+<h3>🏋️ Morning Exercises</h3>
 
-                ${
-                    record.notes
-                    ?
-                    `<p>${escapeHtml(record.notes)}</p>`
-                    :
-                    ""
-                }
+<div class="item-date">
+${formatDate(r.date)}
+</div>
 
-            `;
+<div class="record-value">
+⏱️ ${r.duration} minutes
+</div>
 
-            list.appendChild(div);
+<div class="record-value">
+✅ ${r.completed} / ${r.total}
+exercises (${rate}%)
+</div>
 
-        });
+${
+ r.notes
+ ?
+ `<p>${escapeHtml(r.notes)}</p>`
+ :
+ ""
+}
+
+`;
+
+
+  list.appendChild(div);
+
+ });
 
 }
 
 
-/* =========================
-   HELPERS
-========================= */
-
 function formatDate(date){
 
-    return new Date(date)
-        .toLocaleString();
+ return new Date(date)
+ .toLocaleString();
 
 }
 
 
 function escapeHtml(text){
 
-    const div =
-        document.createElement("div");
+ const div =
+ document.createElement("div");
 
-    div.textContent =
-        text;
+ div.textContent=text;
 
-    return div.innerHTML;
+ return div.innerHTML;
 
 }
 
 
-/* =========================
-   START
-========================= */
-
 applySettings();
-
-displayTasks();
 
 </script>
 
