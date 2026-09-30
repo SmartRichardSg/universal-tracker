@@ -1,1829 +1,1214 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>Universal Tracker</title>
+<title>Exercise Tracker</title>
 
 <style>
 
 :root{
---main-color:#2563eb;
---background-color:#eef4ff;
+    --main:#2864e8;
+    --bg:#eef4ff;
+    --text:#172033;
+    --card:#ffffff;
+    --danger:#e52525;
+    --muted:#777;
 }
 
 *{
-box-sizing:border-box;
+    box-sizing:border-box;
 }
 
 body{
+    margin:0;
+    padding:20px 14px 50px;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
 
-font-family:
--apple-system,
-BlinkMacSystemFont,
-"Segoe UI",
-sans-serif;
-
-background:var(--background-color);
-
-color:#172033;
-
-margin:0;
-
-padding:18px 12px 40px;
-
+.container{
+    max-width:800px;
+    margin:auto;
 }
 
 .card{
-
-max-width:700px;
-
-margin:auto;
-
-background:white;
-
-padding:22px 18px;
-
-border-radius:24px;
-
-box-shadow:
-0 5px 20px rgba(0,0,0,0.08);
-
+    background:var(--card);
+    border-radius:28px;
+    padding:28px 24px;
+    box-shadow:0 8px 30px rgba(0,0,0,.08);
 }
 
 h1{
-
-color:var(--main-color);
-
-text-align:center;
-
-font-size:34px;
-
-margin:15px 0 25px;
-
+    text-align:center;
+    font-size:42px;
+    margin:10px 0 35px;
+    color:var(--main);
 }
 
 h2{
+    text-align:center;
+    font-size:38px;
+    margin:35px 0 25px;
+}
 
-text-align:center;
-
-font-size:28px;
-
-margin:25px 0;
-
+h3{
+    margin:0 0 8px;
+    font-size:22px;
 }
 
 .tabs{
-
-display:grid;
-
-grid-template-columns:
-repeat(4,1fr);
-
-gap:7px;
-
-margin-bottom:25px;
-
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
 }
 
-.tabs button{
-
-padding:12px 4px;
-
-border:0;
-
-border-radius:12px;
-
-background:#dce6ff;
-
-color:#172033;
-
-font-weight:bold;
-
-font-size:14px;
-
+.tab{
+    border:0;
+    border-radius:20px;
+    padding:18px 8px;
+    background:#dbe6ff;
+    color:var(--text);
+    font-size:16px;
+    font-weight:800;
 }
 
-.tabs button.active{
-
-background:var(--main-color);
-
-color:white;
-
-}
-
-button{
-
-padding:13px;
-
-margin:5px 0;
-
-border:0;
-
-border-radius:12px;
-
-background:var(--main-color);
-
-color:white;
-
-font-size:16px;
-
-font-weight:bold;
-
-cursor:pointer;
-
-}
-
-.primary{
-
-width:100%;
-
+.tab.active{
+    background:var(--main);
+    color:white;
 }
 
 input,
 textarea,
 select{
-
-width:100%;
-
-padding:14px;
-
-box-sizing:border-box;
-
-border:1px solid #ccc;
-
-border-radius:12px;
-
-font-size:16px;
-
-margin:5px 0 12px;
-
-font-family:inherit;
-
+    width:100%;
+    padding:18px;
+    border:2px solid #d5d5d5;
+    border-radius:18px;
+    font-size:18px;
+    margin-bottom:14px;
+    background:white;
 }
 
 textarea{
-
-min-height:120px;
-
-resize:vertical;
-
+    min-height:120px;
+    resize:vertical;
 }
 
-label{
-
-display:block;
-
-font-weight:bold;
-
-margin-top:10px;
-
+button{
+    font-family:inherit;
+    cursor:pointer;
 }
 
-input[type="color"]{
-
-height:55px;
-
-padding:5px;
-
+.primary{
+    width:100%;
+    padding:19px;
+    border:0;
+    border-radius:18px;
+    background:var(--main);
+    color:white;
+    font-size:21px;
+    font-weight:800;
+    margin-bottom:18px;
 }
 
-.item{
-
-padding:16px 0;
-
-border-bottom:1px solid #ddd;
-
-}
-
-.item:last-child{
-
-border-bottom:0;
-
-}
-
-.done{
-
-text-decoration:line-through;
-
-color:#888;
-
+.danger{
+    background:var(--danger);
 }
 
 .small{
+    padding:12px 16px;
+    border:0;
+    border-radius:14px;
+    background:var(--main);
+    color:white;
+    font-weight:700;
+    font-size:15px;
+}
 
-color:#777;
+.gray{
+    background:#777;
+}
 
-font-size:14px;
+.item{
+    background:#f7f9fd;
+    border-radius:20px;
+    padding:20px;
+    margin:18px 0;
+}
 
-margin-top:5px;
-
+.item-date{
+    color:#777;
+    font-size:16px;
+    margin-bottom:14px;
 }
 
 .actions{
-
-display:flex;
-
-gap:7px;
-
-margin-top:8px;
-
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:15px;
 }
 
 .actions button{
-
-flex:1;
-
-font-size:14px;
-
-padding:11px 5px;
-
+    padding:13px 8px;
+    border:0;
+    border-radius:14px;
+    color:white;
+    background:var(--main);
+    font-weight:800;
+    font-size:15px;
 }
 
-.delete{
-
-background:#dc2626;
-
+.actions .delete{
+    background:var(--danger);
 }
 
 .empty{
-
-text-align:center;
-
-color:#777;
-
-padding:30px 5px;
-
+    text-align:center;
+    color:#777;
+    font-size:18px;
+    padding:25px;
 }
 
-.record{
-
-background:#f7f9fc;
-
-padding:15px;
-
-border-radius:14px;
-
-margin:12px 0;
-
+.section{
+    margin-top:20px;
 }
 
-.reviewCard{
-
-background:#f7f9fc;
-
-padding:16px;
-
-border-radius:14px;
-
-margin:12px 0;
-
+.stat-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+    margin:20px 0;
 }
 
 .stat{
+    background:#f4f7fc;
+    border-radius:20px;
+    padding:22px;
+    text-align:center;
+}
 
-text-align:center;
+.stat-number{
+    font-size:38px;
+    font-weight:900;
+    color:var(--main);
+}
 
-font-size:42px;
+.stat-label{
+    color:#777;
+    font-weight:700;
+}
 
-font-weight:bold;
-
-color:var(--main-color);
-
+.settings-label{
+    display:block;
+    font-size:19px;
+    font-weight:800;
+    margin:18px 0 8px;
 }
 
 .hidden{
-
-display:none;
-
+    display:none;
 }
 
-.noteBox{
-
-background:#f7f9fc;
-
-padding:15px;
-
-border-radius:14px;
-
-margin-top:15px;
-
-white-space:pre-wrap;
-
+.note{
+    color:#777;
+    font-size:15px;
+    text-align:center;
+    margin-top:20px;
 }
 
-.version{
+@media(max-width:600px){
 
-text-align:center;
+    h1{
+        font-size:38px;
+    }
 
-font-weight:bold;
+    h2{
+        font-size:34px;
+    }
 
-margin-top:20px;
+    .tabs{
+        grid-template-columns:repeat(2,1fr);
+    }
 
-color:#666;
-
-}
-
-@media(max-width:500px){
-
-h1{
-
-font-size:30px;
-
-}
-
-.tabs button{
-
-font-size:12px;
-
-}
-
-.actions{
-
-flex-direction:row;
-
-}
+    .actions{
+        grid-template-columns:1fr;
+    }
 
 }
 
 </style>
-
 </head>
-
 
 <body>
 
+<div class="container">
 
 <div class="card">
 
-
-<h1 id="appHeading">
-📋 Universal Tracker
-</h1>
-
-
-<!-- =========================
-     TABS
-========================= -->
+<h1 id="appTitle">🏋️ Exercise Tracker</h1>
 
 <div class="tabs">
 
-
-<button
-id="taskTab"
-onclick="showTasks()">
-
+<button class="tab active" id="tabTasks" onclick="showSection('tasks')">
 📋 Tasks
-
 </button>
 
-
-<button
-id="recordTab"
-onclick="showRecords()">
-
+<button class="tab" id="tabRecords" onclick="showSection('records')">
 📝 Records
-
 </button>
 
-
-<button
-id="reviewTab"
-onclick="showReview()">
-
+<button class="tab" id="tabReview" onclick="showSection('review')">
 📊 Review
-
 </button>
 
-
-<button
-id="settingsTab"
-onclick="showSettings()">
-
+<button class="tab" id="tabSettings" onclick="showSection('settings')">
 ⚙️ Settings
-
 </button>
-
 
 </div>
 
 
+<!-- ================= TASKS ================= -->
 
-<!-- =========================
-     TASKS
-========================= -->
-
-<div
-id="tasksSection">
-
+<section id="tasks" class="section">
 
 <h2>📋 Tasks</h2>
 
-
 <input
 id="taskInput"
-placeholder="Enter a new task">
+type="text"
+placeholder="Enter exercise goal"
+>
 
-
-<button
-class="primary"
-onclick="addTask()">
-
-＋ Add Task
-
+<button class="primary" onclick="addTask()">
+＋ Add Exercise Goal
 </button>
 
+<div id="taskList"></div>
 
-<div
-id="taskList">
-</div>
-
-
-</div>
+</section>
 
 
+<!-- ================= RECORDS ================= -->
 
-<!-- =========================
-     RECORDS
-========================= -->
-
-<div
-id="recordsSection"
-class="hidden">
-
+<section id="records" class="section hidden">
 
 <h2>📝 Records</h2>
 
+<input
+id="recordExercise"
+type="text"
+placeholder="Exercise name e.g. Swimming"
+>
 
 <input
-id="recordTitle"
-placeholder="Record title">
-
+id="recordAmount"
+type="text"
+placeholder="Amount e.g. 50 laps / 30 minutes / 20 reps"
+>
 
 <textarea
-id="recordDetails"
-placeholder="Enter details or notes...">
-</textarea>
+id="recordNotes"
+placeholder="Notes (optional)"
+></textarea>
 
-
-<button
-class="primary"
-onclick="addRecord()">
-
-＋ Add Record
-
+<button class="primary" onclick="addRecord()">
+＋ Save Exercise Record
 </button>
 
+<div id="recordList"></div>
 
-<div
-id="recordList">
-</div>
-
-
-</div>
+</section>
 
 
+<!-- ================= REVIEW ================= -->
 
-<!-- =========================
-     REVIEW
-========================= -->
-
-<div
-id="reviewSection"
-class="hidden">
-
+<section id="review" class="section hidden">
 
 <h2>📊 Review</h2>
 
+<select id="reviewPeriod" onchange="displayReview()">
 
-<select
-id="reviewPeriod"
-onchange="displayReview()">
-
-<option value="today">
-Today
-</option>
-
-<option value="7">
-Last 7 Days
-</option>
-
-<option value="30">
-Last 30 Days
-</option>
-
-<option value="all">
-All Records
-</option>
+<option value="today">Today</option>
+<option value="7">Last 7 Days</option>
+<option value="30">Last 30 Days</option>
+<option value="all">All Records</option>
 
 </select>
 
+<div class="stat-grid">
 
-<div class="reviewCard">
+<div class="stat">
 
-<div class="small">
-Records in selected period
-</div>
-
-
-<div
-class="stat"
-id="recordCount">
-
+<div id="recordCount" class="stat-number">
 0
+</div>
+
+<div class="stat-label">
+Exercise Records
+</div>
 
 </div>
 
+<div class="stat">
+
+<div id="taskCount" class="stat-number">
+0
+</div>
+
+<div class="stat-label">
+Active Goals
+</div>
 
 </div>
 
-
-<div
-id="reviewList">
 </div>
 
+<div id="reviewList"></div>
 
-</div>
+</section>
 
 
+<!-- ================= SETTINGS ================= -->
 
-<!-- =========================
-     SETTINGS
-========================= -->
-
-<div
-id="settingsSection"
-class="hidden">
-
+<section id="settings" class="section hidden">
 
 <h2>⚙️ Settings</h2>
 
-
-<label>
+<label class="settings-label">
 App Title
 </label>
 
-
 <input
-id="appTitle"
-placeholder="Universal Tracker">
+id="settingTitle"
+type="text"
+value="Exercise Tracker"
+>
 
-
-<label>
+<label class="settings-label">
 App Icon
 </label>
 
-
 <input
-id="appIcon"
-placeholder="📋">
+id="settingIcon"
+type="text"
+value="🏋️"
+>
 
-
-<label>
+<label class="settings-label">
 Main Colour
 </label>
 
-
 <input
-id="mainColor"
+id="settingMain"
 type="color"
-value="#2563eb">
+value="#2864e8"
+>
 
-
-<label>
+<label class="settings-label">
 Background Colour
 </label>
 
-
 <input
-id="backgroundColor"
+id="settingBg"
 type="color"
-value="#eef4ff">
+value="#eef4ff"
+>
 
-
-<label>
+<label class="settings-label">
 Version
 </label>
 
-
 <input
-id="appVersion"
-placeholder="1.0">
+id="settingVersion"
+type="text"
+value="1.0"
+>
 
-
-<label>
+<label class="settings-label">
 Notes / Comments
 </label>
 
-
 <textarea
-id="appNotes"
-placeholder="Add version information, notes or comments...">
-</textarea>
+id="settingNotes"
+placeholder="Add version information, notes or comments..."
+></textarea>
 
-
-<button
-class="primary"
-onclick="saveSettings()">
-
+<button class="primary" onclick="saveSettings()">
 💾 Save Settings
-
 </button>
 
-
-<button
-class="primary"
-onclick="resetSettings()">
-
+<button class="primary" onclick="resetSettings()">
 ↩️ Reset Settings
-
 </button>
 
+</section>
 
-<div
-id="settingsNotes"
-class="noteBox hidden">
-</div>
-
-
-<div
-class="version"
-id="versionDisplay">
-Version 1.0
-</div>
-
+<p class="note">
+Exercise Tracker • Your personal exercise record
+</p>
 
 </div>
-
-
 </div>
-
 
 
 <script>
-
 
 /* =========================
    DATA
 ========================= */
 
-
 let tasks =
-JSON.parse(
-localStorage.getItem("tasks")
-|| "[]"
-);
-
+JSON.parse(localStorage.getItem("exerciseTasks") || "[]");
 
 let records =
-JSON.parse(
-localStorage.getItem("records")
-|| "[]"
-);
+JSON.parse(localStorage.getItem("exerciseRecords") || "[]");
 
+let settings =
+JSON.parse(localStorage.getItem("exerciseSettings") || "{}");
 
 
 /* =========================
    SETTINGS
 ========================= */
 
-
-let settings =
-JSON.parse(
-localStorage.getItem(
-"trackerSettings"
-)
-|| "null"
-);
-
-
-if(!settings){
-
-settings={
-
-title:"Universal Tracker",
-
-icon:"📋",
-
-mainColor:"#2563eb",
-
-backgroundColor:"#eef4ff",
-
-version:"1.0",
-
-notes:""
-
-};
-
-}
-
-
-
-/* =========================
-   SAVE DATA
-========================= */
-
-
-function saveTasks(){
-
-localStorage.setItem(
-"tasks",
-JSON.stringify(tasks)
-);
-
-}
-
-
-function saveRecords(){
-
-localStorage.setItem(
-"records",
-JSON.stringify(records)
-);
-
-}
-
-
-
-/* =========================
-   APPLY SETTINGS
-========================= */
-
-
 function applySettings(){
 
-document.title =
-settings.title;
+    const title =
+        settings.title || "Exercise Tracker";
 
+    const icon =
+        settings.icon || "🏋️";
 
-document.getElementById(
-"appHeading"
-).textContent =
-settings.icon
-+" "
-+settings.title;
+    const main =
+        settings.main || "#2864e8";
 
+    const bg =
+        settings.bg || "#eef4ff";
 
-document.documentElement
-.style.setProperty(
-"--main-color",
-settings.mainColor
-);
+    document.documentElement.style
+        .setProperty("--main",main);
 
+    document.documentElement.style
+        .setProperty("--bg",bg);
 
-document.documentElement
-.style.setProperty(
-"--background-color",
-settings.backgroundColor
-);
+    document.getElementById("appTitle").textContent =
+        icon + " " + title;
 
+    document.getElementById("settingTitle").value =
+        title;
 
-document.getElementById(
-"versionDisplay"
-).textContent =
-"Version "
-+settings.version;
+    document.getElementById("settingIcon").value =
+        icon;
 
+    document.getElementById("settingMain").value =
+        main;
 
-let notes=
-document.getElementById(
-"settingsNotes"
-);
+    document.getElementById("settingBg").value =
+        bg;
 
+    document.getElementById("settingVersion").value =
+        settings.version || "1.0";
 
-if(settings.notes){
-
-notes.textContent=
-settings.notes;
-
-notes.classList.remove(
-"hidden"
-);
-
-}else{
-
-notes.classList.add(
-"hidden"
-);
-
+    document.getElementById("settingNotes").value =
+        settings.notes || "";
 }
-
-}
-
-
-
-/* =========================
-   LOAD SETTINGS
-========================= */
-
-
-function loadSettings(){
-
-document.getElementById(
-"appTitle"
-).value =
-settings.title;
-
-
-document.getElementById(
-"appIcon"
-).value =
-settings.icon;
-
-
-document.getElementById(
-"mainColor"
-).value =
-settings.mainColor;
-
-
-document.getElementById(
-"backgroundColor"
-).value =
-settings.backgroundColor;
-
-
-document.getElementById(
-"appVersion"
-).value =
-settings.version;
-
-
-document.getElementById(
-"appNotes"
-).value =
-settings.notes;
-
-}
-
-
-
-/* =========================
-   SAVE SETTINGS
-========================= */
 
 
 function saveSettings(){
 
-settings={
+    settings = {
 
-title:
-document.getElementById(
-"appTitle"
-).value.trim()
-||"Universal Tracker",
+        title:
+        document.getElementById("settingTitle").value.trim()
+        || "Exercise Tracker",
 
+        icon:
+        document.getElementById("settingIcon").value.trim()
+        || "🏋️",
 
-icon:
-document.getElementById(
-"appIcon"
-).value.trim()
-||"📋",
+        main:
+        document.getElementById("settingMain").value,
 
+        bg:
+        document.getElementById("settingBg").value,
 
-mainColor:
-document.getElementById(
-"mainColor"
-).value,
+        version:
+        document.getElementById("settingVersion").value.trim()
+        || "1.0",
 
+        notes:
+        document.getElementById("settingNotes").value.trim()
 
-backgroundColor:
-document.getElementById(
-"backgroundColor"
-).value,
+    };
 
+    localStorage.setItem(
+        "exerciseSettings",
+        JSON.stringify(settings)
+    );
 
-version:
-document.getElementById(
-"appVersion"
-).value.trim()
-||"1.0",
+    applySettings();
 
-
-notes:
-document.getElementById(
-"appNotes"
-).value.trim()
-
-};
-
-
-localStorage.setItem(
-"trackerSettings",
-JSON.stringify(settings)
-);
-
-
-applySettings();
-
-
-alert(
-"Settings saved successfully."
-);
+    alert("Settings saved.");
 
 }
-
-
-
-/* =========================
-   RESET SETTINGS
-========================= */
 
 
 function resetSettings(){
 
-if(!confirm(
-"Reset app settings?"
-)){
+    if(!confirm("Reset settings to default?")){
+        return;
+    }
 
-return;
+    settings = {
 
-}
+        title:"Exercise Tracker",
+        icon:"🏋️",
+        main:"#2864e8",
+        bg:"#eef4ff",
+        version:"1.0",
+        notes:""
 
+    };
 
-settings={
+    localStorage.setItem(
+        "exerciseSettings",
+        JSON.stringify(settings)
+    );
 
-title:"Universal Tracker",
-
-icon:"📋",
-
-mainColor:"#2563eb",
-
-backgroundColor:"#eef4ff",
-
-version:"1.0",
-
-notes:""
-
-};
-
-
-localStorage.setItem(
-"trackerSettings",
-JSON.stringify(settings)
-);
-
-
-loadSettings();
-
-applySettings();
+    applySettings();
 
 }
-
 
 
 /* =========================
-   TASK DISPLAY
+   NAVIGATION
 ========================= */
+
+function showSection(section){
+
+    const sections =
+        ["tasks","records","review","settings"];
+
+    sections.forEach(id => {
+
+        document.getElementById(id)
+            .classList.add("hidden");
+
+    });
+
+    document.getElementById(section)
+        .classList.remove("hidden");
+
+
+    document.querySelectorAll(".tab")
+        .forEach(tab => tab.classList.remove("active"));
+
+
+    document.getElementById(
+        "tab" +
+        section.charAt(0).toUpperCase() +
+        section.slice(1)
+    ).classList.add("active");
+
+
+    if(section === "tasks"){
+        displayTasks();
+    }
+
+    if(section === "records"){
+        displayRecords();
+    }
+
+    if(section === "review"){
+        displayReview();
+    }
+
+}
+
+
+/* =========================
+   TASKS
+========================= */
+
+function addTask(){
+
+    const input =
+        document.getElementById("taskInput");
+
+    const text =
+        input.value.trim();
+
+    if(text === ""){
+        alert("Please enter an exercise goal.");
+        return;
+    }
+
+    tasks.push({
+
+        id:Date.now(),
+
+        text:text,
+
+        done:false,
+
+        date:new Date().toLocaleString()
+
+    });
+
+    localStorage.setItem(
+        "exerciseTasks",
+        JSON.stringify(tasks)
+    );
+
+    input.value = "";
+
+    displayTasks();
+
+}
 
 
 function displayTasks(){
 
-let list=
-document.getElementById(
-"taskList"
-);
+    const list =
+        document.getElementById("taskList");
+
+    list.innerHTML = "";
 
 
-if(tasks.length===0){
+    if(tasks.length === 0){
 
-list.innerHTML=
-"<div class='empty'>No tasks yet.</div>";
+        list.innerHTML =
+            '<div class="empty">No exercise goals yet.</div>';
 
-return;
+        return;
+
+    }
+
+
+    tasks.forEach(task => {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "item";
+
+
+        div.innerHTML = `
+
+            <h3 style="
+                ${task.done
+                ? "text-decoration:line-through;color:#777;"
+                : ""}
+            ">
+                ${escapeHtml(task.text)}
+            </h3>
+
+            <div class="item-date">
+                Added ${escapeHtml(task.date)}
+            </div>
+
+            <div class="actions">
+
+                <button onclick="toggleTask(${task.id})">
+                    ${task.done ? "↩️ Undo" : "✅ Done"}
+                </button>
+
+                <button onclick="editTask(${task.id})">
+                    ✏️ Edit
+                </button>
+
+                <button
+                    class="delete"
+                    onclick="deleteTask(${task.id})">
+                    🗑️ Delete
+                </button>
+
+            </div>
+        `;
+
+        list.appendChild(div);
+
+    });
+
+}
+
+
+function toggleTask(id){
+
+    const task =
+        tasks.find(t => t.id === id);
+
+    if(!task) return;
+
+    task.done = !task.done;
+
+    localStorage.setItem(
+        "exerciseTasks",
+        JSON.stringify(tasks)
+    );
+
+    displayTasks();
 
 }
 
 
-list.innerHTML="";
+function editTask(id){
 
+    const task =
+        tasks.find(t => t.id === id);
 
-tasks.forEach(
-function(task,index){
+    if(!task) return;
 
-let div=
-document.createElement(
-"div"
-);
+    const newText =
+        prompt("Edit exercise goal:",task.text);
 
+    if(newText === null) return;
 
-div.className="item";
+    const clean =
+        newText.trim();
 
+    if(clean === "") return;
 
-div.innerHTML=`
+    task.text = clean;
 
-<div class="${task.done?"done":""}">
+    localStorage.setItem(
+        "exerciseTasks",
+        JSON.stringify(tasks)
+    );
 
-<strong>
-${escapeHTML(task.text)}
-</strong>
-
-</div>
-
-<div class="small">
-
-${task.date}
-
-</div>
-
-<div class="actions">
-
-<button
-onclick="completeTask(${index})">
-
-${task.done
-?"↩️ Undo"
-:"✅ Done"}
-
-</button>
-
-<button
-onclick="editTask(${index})">
-
-✏️ Edit
-
-</button>
-
-<button
-class="delete"
-onclick="deleteTask(${index})">
-
-🗑️ Delete
-
-</button>
-
-</div>
-
-`;
-
-
-list.appendChild(div);
-
-});
+    displayTasks();
 
 }
 
+
+function deleteTask(id){
+
+    if(!confirm("Delete this exercise goal?")){
+        return;
+    }
+
+    tasks =
+        tasks.filter(t => t.id !== id);
+
+    localStorage.setItem(
+        "exerciseTasks",
+        JSON.stringify(tasks)
+    );
+
+    displayTasks();
+
+}
 
 
 /* =========================
-   ADD TASK
+   RECORDS
 ========================= */
 
+function addRecord(){
 
-function addTask(){
+    const exercise =
+        document.getElementById("recordExercise")
+        .value.trim();
 
-let input=
-document.getElementById(
-"taskInput"
-);
+    const amount =
+        document.getElementById("recordAmount")
+        .value.trim();
 
-
-let text=
-input.value.trim();
-
-
-if(text===""){
-
-alert(
-"Please enter a task."
-);
-
-return;
-
-}
+    const notes =
+        document.getElementById("recordNotes")
+        .value.trim();
 
 
-tasks.push({
+    if(exercise === ""){
 
-text:text,
+        alert("Please enter the exercise name.");
 
-done:false,
+        return;
 
-date:new Date()
-.toLocaleString()
-
-});
+    }
 
 
-input.value="";
+    records.push({
+
+        id:Date.now(),
+
+        exercise:exercise,
+
+        amount:amount,
+
+        notes:notes,
+
+        date:new Date().toISOString()
+
+    });
 
 
-saveTasks();
-
-displayTasks();
-
-}
-
+    localStorage.setItem(
+        "exerciseRecords",
+        JSON.stringify(records)
+    );
 
 
-/* =========================
-   COMPLETE TASK
-========================= */
+    document.getElementById("recordExercise")
+        .value = "";
+
+    document.getElementById("recordAmount")
+        .value = "";
+
+    document.getElementById("recordNotes")
+        .value = "";
 
 
-function completeTask(index){
+    displayRecords();
 
-tasks[index].done=
-!tasks[index].done;
-
-
-saveTasks();
-
-displayTasks();
+    alert("Exercise record saved.");
 
 }
-
-
-
-/* =========================
-   EDIT TASK
-========================= */
-
-
-function editTask(index){
-
-let newText=
-prompt(
-"Edit task:",
-tasks[index].text
-);
-
-
-if(newText===null){
-
-return;
-
-}
-
-
-newText=
-newText.trim();
-
-
-if(newText===""){
-
-return;
-
-}
-
-
-tasks[index].text=
-newText;
-
-
-saveTasks();
-
-displayTasks();
-
-}
-
-
-
-/* =========================
-   DELETE TASK
-========================= */
-
-
-function deleteTask(index){
-
-if(
-confirm(
-"Delete this task?"
-)
-){
-
-tasks.splice(index,1);
-
-saveTasks();
-
-displayTasks();
-
-}
-
-}
-
-
-
-/* =========================
-   RECORD DISPLAY
-========================= */
 
 
 function displayRecords(){
 
-let list=
-document.getElementById(
-"recordList"
-);
+    const list =
+        document.getElementById("recordList");
+
+    list.innerHTML = "";
 
 
-if(records.length===0){
+    if(records.length === 0){
 
-list.innerHTML=
-"<div class='empty'>No records yet.</div>";
+        list.innerHTML =
+            '<div class="empty">No exercise records yet.</div>';
 
-return;
+        return;
 
-}
-
-
-list.innerHTML="";
+    }
 
 
-records
-.slice()
-.reverse()
-.forEach(
-function(record,index){
-
-let actualIndex=
-records.length-1-index;
+    const sorted =
+        [...records].sort(
+            (a,b) =>
+            new Date(b.date) -
+            new Date(a.date)
+        );
 
 
-let div=
-document.createElement(
-"div"
-);
+    sorted.forEach(record => {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "item";
 
 
-div.className="record";
+        div.innerHTML = `
 
+            <h3>
+                ${escapeHtml(record.exercise)}
+            </h3>
 
-div.innerHTML=`
+            <div class="item-date">
+                ${formatDate(record.date)}
+            </div>
 
-<strong>
-${escapeHTML(record.title)}
-</strong>
+            ${
+                record.amount
+                ?
+                `<p><strong>Amount:</strong>
+                ${escapeHtml(record.amount)}</p>`
+                :
+                ""
+            }
 
-<div class="small">
+            ${
+                record.notes
+                ?
+                `<p>${escapeHtml(record.notes)}</p>`
+                :
+                ""
+            }
 
-${new Date(record.date)
-.toLocaleString()}
+            <div class="actions">
 
-</div>
+                <button onclick="editRecord(${record.id})">
+                    ✏️ Edit
+                </button>
 
-<p>
+                <button
+                    class="delete"
+                    onclick="deleteRecord(${record.id})">
+                    🗑️ Delete
+                </button>
 
-${escapeHTML(record.details)}
+            </div>
 
-</p>
+        `;
 
-<div class="actions">
+        list.appendChild(div);
 
-<button
-onclick="editRecord(${actualIndex})">
-
-✏️ Edit
-
-</button>
-
-<button
-class="delete"
-onclick="deleteRecord(${actualIndex})">
-
-🗑️ Delete
-
-</button>
-
-</div>
-
-`;
-
-
-list.appendChild(div);
-
-});
+    });
 
 }
 
 
+function editRecord(id){
 
-/* =========================
-   ADD RECORD
-========================= */
+    const record =
+        records.find(r => r.id === id);
 
-
-function addRecord(){
-
-let title=
-document.getElementById(
-"recordTitle"
-).value.trim();
+    if(!record) return;
 
 
-let details=
-document.getElementById(
-"recordDetails"
-).value.trim();
+    const exercise =
+        prompt(
+            "Exercise:",
+            record.exercise
+        );
+
+    if(exercise === null) return;
 
 
-if(title===""){
+    const amount =
+        prompt(
+            "Amount:",
+            record.amount
+        );
 
-alert(
-"Please enter a record title."
-);
-
-return;
-
-}
+    if(amount === null) return;
 
 
-records.push({
+    const notes =
+        prompt(
+            "Notes:",
+            record.notes
+        );
 
-title:title,
-
-details:details,
-
-date:new Date()
-.toISOString()
-
-});
+    if(notes === null) return;
 
 
-document.getElementById(
-"recordTitle"
-).value="";
+    record.exercise =
+        exercise.trim();
+
+    record.amount =
+        amount.trim();
+
+    record.notes =
+        notes.trim();
 
 
-document.getElementById(
-"recordDetails"
-).value="";
+    localStorage.setItem(
+        "exerciseRecords",
+        JSON.stringify(records)
+    );
 
 
-saveRecords();
-
-displayRecords();
+    displayRecords();
 
 }
 
 
+function deleteRecord(id){
 
-/* =========================
-   EDIT RECORD
-========================= */
+    if(!confirm("Delete this exercise record?")){
+        return;
+    }
 
+    records =
+        records.filter(r => r.id !== id);
 
-function editRecord(index){
+    localStorage.setItem(
+        "exerciseRecords",
+        JSON.stringify(records)
+    );
 
-let record=
-records[index];
-
-
-let newTitle=
-prompt(
-"Edit record title:",
-record.title
-);
-
-
-if(newTitle===null){
-
-return;
+    displayRecords();
 
 }
-
-
-newTitle=
-newTitle.trim();
-
-
-if(newTitle===""){
-
-return;
-
-}
-
-
-let newDetails=
-prompt(
-"Edit record details:",
-record.details
-);
-
-
-if(newDetails===null){
-
-return;
-
-}
-
-
-record.title=
-newTitle;
-
-
-record.details=
-newDetails;
-
-
-saveRecords();
-
-displayRecords();
-
-}
-
-
-
-/* =========================
-   DELETE RECORD
-========================= */
-
-
-function deleteRecord(index){
-
-if(
-confirm(
-"Delete this record?"
-)
-){
-
-records.splice(index,1);
-
-saveRecords();
-
-displayRecords();
-
-}
-
-}
-
 
 
 /* =========================
    REVIEW
 ========================= */
 
-
 function displayReview(){
 
-let period=
-document.getElementById(
-"reviewPeriod"
-).value;
+    const period =
+        document.getElementById("reviewPeriod")
+        .value;
 
 
-let list=
-records.slice();
+    let filtered = [...records];
 
 
-if(period!=="all"){
-
-let days=
-period==="today"
-?1
-:Number(period);
+    const now =
+        new Date();
 
 
-let start=
-new Date();
+    if(period === "today"){
+
+        filtered =
+            records.filter(record => {
+
+                const d =
+                    new Date(record.date);
+
+                return (
+                    d.getFullYear() === now.getFullYear() &&
+                    d.getMonth() === now.getMonth() &&
+                    d.getDate() === now.getDate()
+                );
+
+            });
+
+    }
 
 
-start.setHours(
-0,0,0,0
-);
+    if(period === "7"){
+
+        const cutoff =
+            new Date();
+
+        cutoff.setDate(
+            cutoff.getDate() - 7
+        );
+
+        filtered =
+            records.filter(
+                r => new Date(r.date) >= cutoff
+            );
+
+    }
 
 
-start.setDate(
-start.getDate()
--days+1
-);
+    if(period === "30"){
+
+        const cutoff =
+            new Date();
+
+        cutoff.setDate(
+            cutoff.getDate() - 30
+        );
+
+        filtered =
+            records.filter(
+                r => new Date(r.date) >= cutoff
+            );
+
+    }
 
 
-list=
-list.filter(
-function(record){
+    document.getElementById("recordCount")
+        .textContent = filtered.length;
 
-return new Date(
-record.date
-)>=start;
 
-});
+    document.getElementById("taskCount")
+        .textContent =
+        tasks.filter(t => !t.done).length;
+
+
+    const list =
+        document.getElementById("reviewList");
+
+    list.innerHTML = "";
+
+
+    if(filtered.length === 0){
+
+        list.innerHTML =
+            '<div class="empty">No exercise records for this period.</div>';
+
+        return;
+
+    }
+
+
+    filtered
+        .sort(
+            (a,b) =>
+            new Date(b.date) -
+            new Date(a.date)
+        )
+        .forEach(record => {
+
+            const div =
+                document.createElement("div");
+
+            div.className = "item";
+
+
+            div.innerHTML = `
+
+                <h3>
+                    ${escapeHtml(record.exercise)}
+                </h3>
+
+                <div class="item-date">
+                    ${formatDate(record.date)}
+                </div>
+
+                ${
+                    record.amount
+                    ?
+                    `<p><strong>${escapeHtml(record.amount)}</strong></p>`
+                    :
+                    ""
+                }
+
+                ${
+                    record.notes
+                    ?
+                    `<p>${escapeHtml(record.notes)}</p>`
+                    :
+                    ""
+                }
+
+            `;
+
+            list.appendChild(div);
+
+        });
 
 }
-
-
-document.getElementById(
-"recordCount"
-).textContent=
-list.length;
-
-
-let review=
-document.getElementById(
-"reviewList"
-);
-
-
-if(list.length===0){
-
-review.innerHTML=
-"<div class='empty'>No records for this period.</div>";
-
-return;
-
-}
-
-
-list.sort(
-function(a,b){
-
-return new Date(b.date)
--
-new Date(a.date);
-
-});
-
-
-review.innerHTML="";
-
-
-list.forEach(
-function(record){
-
-let div=
-document.createElement(
-"div"
-);
-
-
-div.className=
-"reviewCard";
-
-
-div.innerHTML=`
-
-<strong>
-${escapeHTML(record.title)}
-</strong>
-
-<div class="small">
-
-${new Date(record.date)
-.toLocaleString()}
-
-</div>
-
-<p>
-
-${escapeHTML(record.details)}
-
-</p>
-
-`;
-
-
-review.appendChild(div);
-
-});
-
-}
-
 
 
 /* =========================
-   TAB FUNCTIONS
+   HELPERS
 ========================= */
 
+function formatDate(date){
 
-function clearTabs(){
-
-document
-.querySelectorAll(
-".tabs button"
-)
-.forEach(
-function(button){
-
-button.classList.remove(
-"active"
-);
-
-});
+    return new Date(date)
+        .toLocaleString();
 
 }
 
 
+function escapeHtml(text){
 
-function hideSections(){
+    const div =
+        document.createElement("div");
 
-document
-.getElementById(
-"tasksSection"
-)
-.classList.add(
-"hidden"
-);
+    div.textContent =
+        text;
 
-
-document
-.getElementById(
-"recordsSection"
-)
-.classList.add(
-"hidden"
-);
-
-
-document
-.getElementById(
-"reviewSection"
-)
-.classList.add(
-"hidden"
-);
-
-
-document
-.getElementById(
-"settingsSection"
-)
-.classList.add(
-"hidden"
-);
+    return div.innerHTML;
 
 }
-
-
-
-/* =========================
-   SHOW TASKS
-========================= */
-
-
-function showTasks(){
-
-hideSections();
-
-clearTabs();
-
-
-document
-.getElementById(
-"tasksSection"
-)
-.classList.remove(
-"hidden"
-);
-
-
-document
-.getElementById(
-"taskTab"
-)
-.classList.add(
-"active"
-);
-
-
-displayTasks();
-
-}
-
-
-
-/* =========================
-   SHOW RECORDS
-========================= */
-
-
-function showRecords(){
-
-hideSections();
-
-clearTabs();
-
-
-document
-.getElementById(
-"recordsSection"
-)
-.classList.remove(
-"hidden"
-);
-
-
-document
-.getElementById(
-"recordTab"
-)
-.classList.add(
-"active"
-);
-
-
-displayRecords();
-
-}
-
-
-
-/* =========================
-   SHOW REVIEW
-========================= */
-
-
-function showReview(){
-
-hideSections();
-
-clearTabs();
-
-
-document
-.getElementById(
-"reviewSection"
-)
-.classList.remove(
-"hidden"
-);
-
-
-document
-.getElementById(
-"reviewTab"
-)
-.classList.add(
-"active"
-);
-
-
-displayReview();
-
-}
-
-
-
-/* =========================
-   SHOW SETTINGS
-========================= */
-
-
-function showSettings(){
-
-hideSections();
-
-clearTabs();
-
-
-document
-.getElementById(
-"settingsSection"
-)
-.classList.remove(
-"hidden"
-);
-
-
-document
-.getElementById(
-"settingsTab"
-)
-.classList.add(
-"active"
-);
-
-
-loadSettings();
-
-}
-
-
-
-/* =========================
-   SAFETY
-========================= */
-
-
-function escapeHTML(text){
-
-return String(text)
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
-
-}
-
 
 
 /* =========================
    START APP
 ========================= */
 
-
 applySettings();
 
-showTasks();
-
+displayTasks();
 
 </script>
 
 </body>
-
 </html>
