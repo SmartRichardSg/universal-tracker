@@ -1,222 +1,513 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
 <title>Universal Tracker</title>
 
 <style>
+
+:root{
+--main-color:#2563eb;
+--background-color:#eef4ff;
+}
+
+*{
+box-sizing:border-box;
+}
+
 body{
-font-family:-apple-system,BlinkMacSystemFont,sans-serif;
-background:#eef4ff;
+
+font-family:
+-apple-system,
+BlinkMacSystemFont,
+"Segoe UI",
+sans-serif;
+
+background:var(--background-color);
+
 color:#172033;
+
 margin:0;
-padding:18px 12px 40px
+
+padding:18px 12px 40px;
+
 }
 
 .card{
-max-width:650px;
+
+max-width:700px;
+
 margin:auto;
+
 background:white;
+
 padding:22px 18px;
-border-radius:20px;
-box-shadow:0 4px 15px #0001
+
+border-radius:24px;
+
+box-shadow:
+0 5px 20px rgba(0,0,0,0.08);
+
 }
 
 h1{
-color:#2563eb;
+
+color:var(--main-color);
+
 text-align:center;
-font-size:30px
+
+font-size:34px;
+
+margin:15px 0 25px;
+
 }
 
-h2{text-align:center}
+h2{
+
+text-align:center;
+
+font-size:28px;
+
+margin:25px 0;
+
+}
 
 .tabs{
+
 display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:6px;
-margin:15px auto;
-max-width:650px
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:7px;
+
+margin-bottom:25px;
+
 }
 
 .tabs button{
-padding:11px 3px;
+
+padding:12px 4px;
+
 border:0;
-border-radius:10px;
+
+border-radius:12px;
+
 background:#dce6ff;
+
 color:#172033;
+
 font-weight:bold;
-font-size:14px
+
+font-size:14px;
+
 }
 
 .tabs button.active{
-background:#2563eb;
-color:white
+
+background:var(--main-color);
+
+color:white;
+
 }
 
 button{
+
 padding:13px;
-margin:6px 0;
+
+margin:5px 0;
+
 border:0;
+
 border-radius:12px;
-background:#2563eb;
+
+background:var(--main-color);
+
 color:white;
+
 font-size:16px;
-font-weight:bold
+
+font-weight:bold;
+
+cursor:pointer;
+
 }
 
-.primary{width:100%}
+.primary{
 
-input,textarea,select{
 width:100%;
-padding:13px;
-box-sizing:border-box;
-border:1px solid #ccc;
-border-radius:10px;
-font-size:16px;
-margin:5px 0 10px
+
 }
 
-textarea{min-height:110px}
+input,
+textarea,
+select{
+
+width:100%;
+
+padding:14px;
+
+box-sizing:border-box;
+
+border:1px solid #ccc;
+
+border-radius:12px;
+
+font-size:16px;
+
+margin:5px 0 12px;
+
+font-family:inherit;
+
+}
+
+textarea{
+
+min-height:120px;
+
+resize:vertical;
+
+}
+
+label{
+
+display:block;
+
+font-weight:bold;
+
+margin-top:10px;
+
+}
+
+input[type="color"]{
+
+height:55px;
+
+padding:5px;
+
+}
 
 .item{
-padding:15px 0;
-border-bottom:1px solid #ddd
+
+padding:16px 0;
+
+border-bottom:1px solid #ddd;
+
 }
 
-.item:last-child{border-bottom:0}
+.item:last-child{
+
+border-bottom:0;
+
+}
 
 .done{
+
 text-decoration:line-through;
-color:#888
+
+color:#888;
+
 }
 
 .small{
+
 color:#777;
-font-size:13px;
-margin-top:4px
+
+font-size:14px;
+
+margin-top:5px;
+
 }
 
 .actions{
+
 display:flex;
-gap:7px
+
+gap:7px;
+
+margin-top:8px;
+
 }
 
 .actions button{
+
 flex:1;
+
 font-size:14px;
-padding:10px 5px
+
+padding:11px 5px;
+
 }
 
-.delete{background:#dc2626}
+.delete{
 
-.record{
-background:#f7f9fc;
-padding:14px;
-border-radius:12px;
-margin:10px 0
+background:#dc2626;
+
 }
-
-.hidden{display:none}
 
 .empty{
+
 text-align:center;
+
 color:#777;
-padding:25px 5px
+
+padding:30px 5px;
+
 }
 
-.stat{
-text-align:center;
-font-size:30px;
-font-weight:bold;
-color:#2563eb
+.record{
+
+background:#f7f9fc;
+
+padding:15px;
+
+border-radius:14px;
+
+margin:12px 0;
+
 }
 
 .reviewCard{
+
 background:#f7f9fc;
-padding:14px;
-border-radius:12px;
-margin:10px 0
+
+padding:16px;
+
+border-radius:14px;
+
+margin:12px 0;
+
 }
+
+.stat{
+
+text-align:center;
+
+font-size:42px;
+
+font-weight:bold;
+
+color:var(--main-color);
+
+}
+
+.hidden{
+
+display:none;
+
+}
+
+.noteBox{
+
+background:#f7f9fc;
+
+padding:15px;
+
+border-radius:14px;
+
+margin-top:15px;
+
+white-space:pre-wrap;
+
+}
+
+.version{
+
+text-align:center;
+
+font-weight:bold;
+
+margin-top:20px;
+
+color:#666;
+
+}
+
+@media(max-width:500px){
+
+h1{
+
+font-size:30px;
+
+}
+
+.tabs button{
+
+font-size:12px;
+
+}
+
+.actions{
+
+flex-direction:row;
+
+}
+
+}
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="card">
 
-<h1>📋 Universal Tracker</h1>
+
+<h1 id="appHeading">
+📋 Universal Tracker
+</h1>
+
+
+<!-- =========================
+     TABS
+========================= -->
 
 <div class="tabs">
 
-<button id="taskTab" onclick="showTasks()">
+
+<button
+id="taskTab"
+onclick="showTasks()">
+
 📋 Tasks
+
 </button>
 
-<button id="recordTab" onclick="showRecords()">
+
+<button
+id="recordTab"
+onclick="showRecords()">
+
 📝 Records
+
 </button>
 
-<button id="reviewTab" onclick="showReview()">
+
+<button
+id="reviewTab"
+onclick="showReview()">
+
 📊 Review
+
 </button>
+
+
+<button
+id="settingsTab"
+onclick="showSettings()">
+
+⚙️ Settings
+
+</button>
+
 
 </div>
 
 
-<!-- TASKS -->
 
-<div id="tasksSection">
+<!-- =========================
+     TASKS
+========================= -->
 
-<h2>Tasks</h2>
+<div
+id="tasksSection">
+
+
+<h2>📋 Tasks</h2>
+
 
 <input
 id="taskInput"
 placeholder="Enter a new task">
 
-<button class="primary"
+
+<button
+class="primary"
 onclick="addTask()">
+
 ＋ Add Task
+
 </button>
 
-<div id="taskList"></div>
+
+<div
+id="taskList">
+</div>
+
 
 </div>
 
 
-<!-- RECORDS -->
 
-<div id="recordsSection" class="hidden">
+<!-- =========================
+     RECORDS
+========================= -->
 
-<h2>Records</h2>
+<div
+id="recordsSection"
+class="hidden">
+
+
+<h2>📝 Records</h2>
+
 
 <input
 id="recordTitle"
 placeholder="Record title">
 
+
 <textarea
 id="recordDetails"
-placeholder="Enter details or notes..."></textarea>
+placeholder="Enter details or notes...">
+</textarea>
 
-<button class="primary"
+
+<button
+class="primary"
 onclick="addRecord()">
+
 ＋ Add Record
+
 </button>
 
-<div id="recordList"></div>
+
+<div
+id="recordList">
+</div>
+
 
 </div>
 
 
-<!-- REVIEW -->
 
-<div id="reviewSection" class="hidden">
+<!-- =========================
+     REVIEW
+========================= -->
+
+<div
+id="reviewSection"
+class="hidden">
+
 
 <h2>📊 Review</h2>
 
-<select id="reviewPeriod"
+
+<select
+id="reviewPeriod"
 onchange="displayReview()">
 
-<option value="today">Today</option>
+<option value="today">
+Today
+</option>
 
 <option value="7">
 Last 7 Days
@@ -232,46 +523,211 @@ All Records
 
 </select>
 
+
 <div class="reviewCard">
 
 <div class="small">
 Records in selected period
 </div>
 
-<div class="stat"
+
+<div
+class="stat"
 id="recordCount">
+
 0
-</div>
 
 </div>
 
-<div id="reviewList"></div>
 
 </div>
 
+
+<div
+id="reviewList">
 </div>
+
+
+</div>
+
+
+
+<!-- =========================
+     SETTINGS
+========================= -->
+
+<div
+id="settingsSection"
+class="hidden">
+
+
+<h2>⚙️ Settings</h2>
+
+
+<label>
+App Title
+</label>
+
+
+<input
+id="appTitle"
+placeholder="Universal Tracker">
+
+
+<label>
+App Icon
+</label>
+
+
+<input
+id="appIcon"
+placeholder="📋">
+
+
+<label>
+Main Colour
+</label>
+
+
+<input
+id="mainColor"
+type="color"
+value="#2563eb">
+
+
+<label>
+Background Colour
+</label>
+
+
+<input
+id="backgroundColor"
+type="color"
+value="#eef4ff">
+
+
+<label>
+Version
+</label>
+
+
+<input
+id="appVersion"
+placeholder="1.0">
+
+
+<label>
+Notes / Comments
+</label>
+
+
+<textarea
+id="appNotes"
+placeholder="Add version information, notes or comments...">
+</textarea>
+
+
+<button
+class="primary"
+onclick="saveSettings()">
+
+💾 Save Settings
+
+</button>
+
+
+<button
+class="primary"
+onclick="resetSettings()">
+
+↩️ Reset Settings
+
+</button>
+
+
+<div
+id="settingsNotes"
+class="noteBox hidden">
+</div>
+
+
+<div
+class="version"
+id="versionDisplay">
+Version 1.0
+</div>
+
+
+</div>
+
+
+</div>
+
 
 
 <script>
 
-/* =====================
+
+/* =========================
    DATA
-===================== */
+========================= */
+
 
 let tasks =
 JSON.parse(
-localStorage.getItem("tasks") || "[]"
+localStorage.getItem("tasks")
+|| "[]"
 );
+
 
 let records =
 JSON.parse(
-localStorage.getItem("records") || "[]"
+localStorage.getItem("records")
+|| "[]"
 );
 
 
-/* =====================
-   SAVE
-===================== */
+
+/* =========================
+   SETTINGS
+========================= */
+
+
+let settings =
+JSON.parse(
+localStorage.getItem(
+"trackerSettings"
+)
+|| "null"
+);
+
+
+if(!settings){
+
+settings={
+
+title:"Universal Tracker",
+
+icon:"📋",
+
+mainColor:"#2563eb",
+
+backgroundColor:"#eef4ff",
+
+version:"1.0",
+
+notes:""
+
+};
+
+}
+
+
+
+/* =========================
+   SAVE DATA
+========================= */
+
 
 function saveTasks(){
 
@@ -293,14 +749,246 @@ JSON.stringify(records)
 }
 
 
-/* =====================
-   TASKS
-===================== */
+
+/* =========================
+   APPLY SETTINGS
+========================= */
+
+
+function applySettings(){
+
+document.title =
+settings.title;
+
+
+document.getElementById(
+"appHeading"
+).textContent =
+settings.icon
++" "
++settings.title;
+
+
+document.documentElement
+.style.setProperty(
+"--main-color",
+settings.mainColor
+);
+
+
+document.documentElement
+.style.setProperty(
+"--background-color",
+settings.backgroundColor
+);
+
+
+document.getElementById(
+"versionDisplay"
+).textContent =
+"Version "
++settings.version;
+
+
+let notes=
+document.getElementById(
+"settingsNotes"
+);
+
+
+if(settings.notes){
+
+notes.textContent=
+settings.notes;
+
+notes.classList.remove(
+"hidden"
+);
+
+}else{
+
+notes.classList.add(
+"hidden"
+);
+
+}
+
+}
+
+
+
+/* =========================
+   LOAD SETTINGS
+========================= */
+
+
+function loadSettings(){
+
+document.getElementById(
+"appTitle"
+).value =
+settings.title;
+
+
+document.getElementById(
+"appIcon"
+).value =
+settings.icon;
+
+
+document.getElementById(
+"mainColor"
+).value =
+settings.mainColor;
+
+
+document.getElementById(
+"backgroundColor"
+).value =
+settings.backgroundColor;
+
+
+document.getElementById(
+"appVersion"
+).value =
+settings.version;
+
+
+document.getElementById(
+"appNotes"
+).value =
+settings.notes;
+
+}
+
+
+
+/* =========================
+   SAVE SETTINGS
+========================= */
+
+
+function saveSettings(){
+
+settings={
+
+title:
+document.getElementById(
+"appTitle"
+).value.trim()
+||"Universal Tracker",
+
+
+icon:
+document.getElementById(
+"appIcon"
+).value.trim()
+||"📋",
+
+
+mainColor:
+document.getElementById(
+"mainColor"
+).value,
+
+
+backgroundColor:
+document.getElementById(
+"backgroundColor"
+).value,
+
+
+version:
+document.getElementById(
+"appVersion"
+).value.trim()
+||"1.0",
+
+
+notes:
+document.getElementById(
+"appNotes"
+).value.trim()
+
+};
+
+
+localStorage.setItem(
+"trackerSettings",
+JSON.stringify(settings)
+);
+
+
+applySettings();
+
+
+alert(
+"Settings saved successfully."
+);
+
+}
+
+
+
+/* =========================
+   RESET SETTINGS
+========================= */
+
+
+function resetSettings(){
+
+if(!confirm(
+"Reset app settings?"
+)){
+
+return;
+
+}
+
+
+settings={
+
+title:"Universal Tracker",
+
+icon:"📋",
+
+mainColor:"#2563eb",
+
+backgroundColor:"#eef4ff",
+
+version:"1.0",
+
+notes:""
+
+};
+
+
+localStorage.setItem(
+"trackerSettings",
+JSON.stringify(settings)
+);
+
+
+loadSettings();
+
+applySettings();
+
+}
+
+
+
+/* =========================
+   TASK DISPLAY
+========================= */
+
 
 function displayTasks(){
 
-let list =
-document.getElementById("taskList");
+let list=
+document.getElementById(
+"taskList"
+);
+
 
 if(tasks.length===0){
 
@@ -308,47 +996,71 @@ list.innerHTML=
 "<div class='empty'>No tasks yet.</div>";
 
 return;
+
 }
+
 
 list.innerHTML="";
 
-tasks.forEach(function(task,index){
+
+tasks.forEach(
+function(task,index){
 
 let div=
-document.createElement("div");
+document.createElement(
+"div"
+);
+
 
 div.className="item";
+
 
 div.innerHTML=`
 
 <div class="${task.done?"done":""}">
-<strong>${task.text}</strong>
+
+<strong>
+${escapeHTML(task.text)}
+</strong>
+
 </div>
 
 <div class="small">
+
 ${task.date}
+
 </div>
 
 <div class="actions">
 
 <button
 onclick="completeTask(${index})">
-${task.done?"↩️ Undo":"✅ Done"}
+
+${task.done
+?"↩️ Undo"
+:"✅ Done"}
+
 </button>
 
 <button
 onclick="editTask(${index})">
+
 ✏️ Edit
+
 </button>
 
 <button
 class="delete"
 onclick="deleteTask(${index})">
+
 🗑️ Delete
+
 </button>
 
 </div>
+
 `;
+
 
 list.appendChild(div);
 
@@ -357,20 +1069,34 @@ list.appendChild(div);
 }
 
 
+
+/* =========================
+   ADD TASK
+========================= */
+
+
 function addTask(){
 
 let input=
-document.getElementById("taskInput");
+document.getElementById(
+"taskInput"
+);
+
 
 let text=
 input.value.trim();
 
+
 if(text===""){
 
-alert("Please enter a task.");
+alert(
+"Please enter a task."
+);
 
 return;
+
 }
+
 
 tasks.push({
 
@@ -378,17 +1104,26 @@ text:text,
 
 done:false,
 
-date:new Date().toLocaleString()
+date:new Date()
+.toLocaleString()
 
 });
 
+
 input.value="";
+
 
 saveTasks();
 
 displayTasks();
 
 }
+
+
+
+/* =========================
+   COMPLETE TASK
+========================= */
 
 
 function completeTask(index){
@@ -396,11 +1131,18 @@ function completeTask(index){
 tasks[index].done=
 !tasks[index].done;
 
+
 saveTasks();
 
 displayTasks();
 
 }
+
+
+
+/* =========================
+   EDIT TASK
+========================= */
 
 
 function editTask(index){
@@ -411,13 +1153,28 @@ prompt(
 tasks[index].text
 );
 
-if(newText===null)return;
 
-newText=newText.trim();
+if(newText===null){
 
-if(newText==="")return;
+return;
 
-tasks[index].text=newText;
+}
+
+
+newText=
+newText.trim();
+
+
+if(newText===""){
+
+return;
+
+}
+
+
+tasks[index].text=
+newText;
+
 
 saveTasks();
 
@@ -426,9 +1183,19 @@ displayTasks();
 }
 
 
+
+/* =========================
+   DELETE TASK
+========================= */
+
+
 function deleteTask(index){
 
-if(confirm("Delete this task?")){
+if(
+confirm(
+"Delete this task?"
+)
+){
 
 tasks.splice(index,1);
 
@@ -441,14 +1208,19 @@ displayTasks();
 }
 
 
-/* =====================
-   RECORDS
-===================== */
+
+/* =========================
+   RECORD DISPLAY
+========================= */
+
 
 function displayRecords(){
 
 let list=
-document.getElementById("recordList");
+document.getElementById(
+"recordList"
+);
+
 
 if(records.length===0){
 
@@ -456,52 +1228,72 @@ list.innerHTML=
 "<div class='empty'>No records yet.</div>";
 
 return;
+
 }
 
+
 list.innerHTML="";
+
 
 records
 .slice()
 .reverse()
-.forEach(function(record,index){
+.forEach(
+function(record,index){
 
 let actualIndex=
 records.length-1-index;
 
+
 let div=
-document.createElement("div");
+document.createElement(
+"div"
+);
+
 
 div.className="record";
+
 
 div.innerHTML=`
 
 <strong>
-${record.title}
+${escapeHTML(record.title)}
 </strong>
 
 <div class="small">
-${record.date}
+
+${new Date(record.date)
+.toLocaleString()}
+
 </div>
 
 <p>
-${record.details}
+
+${escapeHTML(record.details)}
+
 </p>
 
 <div class="actions">
 
 <button
 onclick="editRecord(${actualIndex})">
+
 ✏️ Edit
+
 </button>
 
 <button
 class="delete"
 onclick="deleteRecord(${actualIndex})">
+
 🗑️ Delete
+
 </button>
 
 </div>
+
 `;
+
 
 list.appendChild(div);
 
@@ -510,24 +1302,36 @@ list.appendChild(div);
 }
 
 
+
+/* =========================
+   ADD RECORD
+========================= */
+
+
 function addRecord(){
 
 let title=
-document
-.getElementById("recordTitle")
-.value.trim();
+document.getElementById(
+"recordTitle"
+).value.trim();
+
 
 let details=
-document
-.getElementById("recordDetails")
-.value.trim();
+document.getElementById(
+"recordDetails"
+).value.trim();
+
 
 if(title===""){
 
-alert("Please enter a record title.");
+alert(
+"Please enter a record title."
+);
 
 return;
+
 }
+
 
 records.push({
 
@@ -535,17 +1339,21 @@ title:title,
 
 details:details,
 
-date:new Date().toISOString()
+date:new Date()
+.toISOString()
 
 });
+
 
 document.getElementById(
 "recordTitle"
 ).value="";
 
+
 document.getElementById(
 "recordDetails"
 ).value="";
+
 
 saveRecords();
 
@@ -554,9 +1362,17 @@ displayRecords();
 }
 
 
+
+/* =========================
+   EDIT RECORD
+========================= */
+
+
 function editRecord(index){
 
-let record=records[index];
+let record=
+records[index];
+
 
 let newTitle=
 prompt(
@@ -564,11 +1380,24 @@ prompt(
 record.title
 );
 
-if(newTitle===null)return;
 
-newTitle=newTitle.trim();
+if(newTitle===null){
 
-if(newTitle==="")return;
+return;
+
+}
+
+
+newTitle=
+newTitle.trim();
+
+
+if(newTitle===""){
+
+return;
+
+}
+
 
 let newDetails=
 prompt(
@@ -576,11 +1405,21 @@ prompt(
 record.details
 );
 
-if(newDetails===null)return;
 
-record.title=newTitle;
+if(newDetails===null){
 
-record.details=newDetails;
+return;
+
+}
+
+
+record.title=
+newTitle;
+
+
+record.details=
+newDetails;
+
 
 saveRecords();
 
@@ -589,9 +1428,19 @@ displayRecords();
 }
 
 
+
+/* =========================
+   DELETE RECORD
+========================= */
+
+
 function deleteRecord(index){
 
-if(confirm("Delete this record?")){
+if(
+confirm(
+"Delete this record?"
+)
+){
 
 records.splice(index,1);
 
@@ -604,9 +1453,11 @@ displayRecords();
 }
 
 
-/* =====================
+
+/* =========================
    REVIEW
-===================== */
+========================= */
+
 
 function displayReview(){
 
@@ -615,10 +1466,10 @@ document.getElementById(
 "reviewPeriod"
 ).value;
 
+
 let list=
 records.slice();
 
-let now=new Date();
 
 if(period!=="all"){
 
@@ -627,31 +1478,46 @@ period==="today"
 ?1
 :Number(period);
 
-let start=new Date();
 
-start.setHours(0,0,0,0);
+let start=
+new Date();
 
-start.setDate(
-start.getDate()-days+1
+
+start.setHours(
+0,0,0,0
 );
 
-list=list.filter(function(record){
 
-return new Date(record.date)>=start;
+start.setDate(
+start.getDate()
+-days+1
+);
+
+
+list=
+list.filter(
+function(record){
+
+return new Date(
+record.date
+)>=start;
 
 });
 
 }
+
 
 document.getElementById(
 "recordCount"
 ).textContent=
 list.length;
 
+
 let review=
 document.getElementById(
 "reviewList"
 );
+
 
 if(list.length===0){
 
@@ -659,40 +1525,57 @@ review.innerHTML=
 "<div class='empty'>No records for this period.</div>";
 
 return;
+
 }
 
-list.sort(function(a,b){
 
-return new Date(b.date)-
+list.sort(
+function(a,b){
+
+return new Date(b.date)
+-
 new Date(a.date);
 
 });
 
+
 review.innerHTML="";
 
-list.forEach(function(record){
+
+list.forEach(
+function(record){
 
 let div=
-document.createElement("div");
+document.createElement(
+"div"
+);
 
-div.className="reviewCard";
+
+div.className=
+"reviewCard";
+
 
 div.innerHTML=`
 
 <strong>
-${record.title}
+${escapeHTML(record.title)}
 </strong>
 
 <div class="small">
+
 ${new Date(record.date)
 .toLocaleString()}
+
 </div>
 
 <p>
-${record.details}
+
+${escapeHTML(record.details)}
+
 </p>
 
 `;
+
 
 review.appendChild(div);
 
@@ -701,38 +1584,75 @@ review.appendChild(div);
 }
 
 
-/* =====================
-   TABS
-===================== */
+
+/* =========================
+   TAB FUNCTIONS
+========================= */
+
 
 function clearTabs(){
 
 document
-.querySelectorAll(".tabs button")
-.forEach(function(button){
+.querySelectorAll(
+".tabs button"
+)
+.forEach(
+function(button){
 
-button.classList.remove("active");
+button.classList.remove(
+"active"
+);
 
 });
 
 }
 
 
+
 function hideSections(){
 
 document
-.getElementById("tasksSection")
-.classList.add("hidden");
+.getElementById(
+"tasksSection"
+)
+.classList.add(
+"hidden"
+);
+
 
 document
-.getElementById("recordsSection")
-.classList.add("hidden");
+.getElementById(
+"recordsSection"
+)
+.classList.add(
+"hidden"
+);
+
 
 document
-.getElementById("reviewSection")
-.classList.add("hidden");
+.getElementById(
+"reviewSection"
+)
+.classList.add(
+"hidden"
+);
+
+
+document
+.getElementById(
+"settingsSection"
+)
+.classList.add(
+"hidden"
+);
 
 }
+
+
+
+/* =========================
+   SHOW TASKS
+========================= */
 
 
 function showTasks(){
@@ -741,17 +1661,34 @@ hideSections();
 
 clearTabs();
 
-document
-.getElementById("tasksSection")
-.classList.remove("hidden");
 
 document
-.getElementById("taskTab")
-.classList.add("active");
+.getElementById(
+"tasksSection"
+)
+.classList.remove(
+"hidden"
+);
+
+
+document
+.getElementById(
+"taskTab"
+)
+.classList.add(
+"active"
+);
+
 
 displayTasks();
 
 }
+
+
+
+/* =========================
+   SHOW RECORDS
+========================= */
 
 
 function showRecords(){
@@ -760,17 +1697,34 @@ hideSections();
 
 clearTabs();
 
-document
-.getElementById("recordsSection")
-.classList.remove("hidden");
 
 document
-.getElementById("recordTab")
-.classList.add("active");
+.getElementById(
+"recordsSection"
+)
+.classList.remove(
+"hidden"
+);
+
+
+document
+.getElementById(
+"recordTab"
+)
+.classList.add(
+"active"
+);
+
 
 displayRecords();
 
 }
+
+
+
+/* =========================
+   SHOW REVIEW
+========================= */
 
 
 function showReview(){
@@ -779,26 +1733,97 @@ hideSections();
 
 clearTabs();
 
-document
-.getElementById("reviewSection")
-.classList.remove("hidden");
 
 document
-.getElementById("reviewTab")
-.classList.add("active");
+.getElementById(
+"reviewSection"
+)
+.classList.remove(
+"hidden"
+);
+
+
+document
+.getElementById(
+"reviewTab"
+)
+.classList.add(
+"active"
+);
+
 
 displayReview();
 
 }
 
 
-/* =====================
-   START
-===================== */
+
+/* =========================
+   SHOW SETTINGS
+========================= */
+
+
+function showSettings(){
+
+hideSections();
+
+clearTabs();
+
+
+document
+.getElementById(
+"settingsSection"
+)
+.classList.remove(
+"hidden"
+);
+
+
+document
+.getElementById(
+"settingsTab"
+)
+.classList.add(
+"active"
+);
+
+
+loadSettings();
+
+}
+
+
+
+/* =========================
+   SAFETY
+========================= */
+
+
+function escapeHTML(text){
+
+return String(text)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+
+/* =========================
+   START APP
+========================= */
+
+
+applySettings();
 
 showTasks();
+
 
 </script>
 
 </body>
+
 </html>
